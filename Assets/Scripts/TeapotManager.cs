@@ -4,7 +4,7 @@ using System.Collections;
 public class TeapotManager : MonoBehaviour {
 
     public GameObject _teapotPrefab;
-    private ParticleSystem _teapotSteam;
+    public GameObject _teapotSteamPrefab;
 
 
     private GameObject _teapot;
@@ -12,7 +12,7 @@ public class TeapotManager : MonoBehaviour {
     {
         _teapot = Instantiate(_teapotPrefab, Vector3.zero, Quaternion.identity) as GameObject;
         _teapot.transform.SetParent(gameObject.transform);
-        _teapotSteam = GetComponentInChildren<ParticleSystem>();
+        
     }
 
 
@@ -24,7 +24,7 @@ public class TeapotManager : MonoBehaviour {
     }
 
     const float MOVEMENT_SPEED = 0.05f;
-    const float COOLDOWN = 1f;
+    const float COOLDOWN = 0.333f;
 
     float? lastFire;
 
@@ -32,9 +32,20 @@ public class TeapotManager : MonoBehaviour {
     {
         if (Input.GetMouseButton(0) && (lastFire == null || (Time.time - lastFire) > COOLDOWN))
         {
-            _teapotSteam.Play();
+            FireAttackSteam();
             lastFire = Time.time;
         }
+    }
+
+    private void FireAttackSteam()
+    {
+        var go = Instantiate(_teapotSteamPrefab, _teapot.transform) as GameObject;
+        go.transform.SetParent(transform, true);
+        go.transform.position = _teapot.transform.position;
+        go.transform.rotation = _teapot.transform.rotation;
+        var particles = go.GetComponent<ParticleSystem>();
+        particles.Play();
+        Destroy(go, particles.duration + particles.startLifetime);
     }
 
     private void Move()
