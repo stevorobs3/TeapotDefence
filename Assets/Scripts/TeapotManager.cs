@@ -23,7 +23,7 @@ public class TeapotManager : MonoBehaviour {
         FireWeapon();
     }
 
-    const float MOVEMENT_SPEED = 0.05f;
+    const float MOVEMENT_SPEED = 1.5f;
     const float COOLDOWN = 0.333f;
 
     float? lastFire;
@@ -52,13 +52,13 @@ public class TeapotManager : MonoBehaviour {
     {
         float deltaX = 0, deltaY = 0;
         if (Input.GetKey(KeyCode.W))
-            deltaY += MOVEMENT_SPEED;
+            deltaY += MOVEMENT_SPEED * Time.deltaTime;
         if (Input.GetKey(KeyCode.S))
-            deltaY -= MOVEMENT_SPEED;
+            deltaY -= MOVEMENT_SPEED * Time.deltaTime;
         if (Input.GetKey(KeyCode.A))
-            deltaX -= MOVEMENT_SPEED;
+            deltaX -= MOVEMENT_SPEED * Time.deltaTime;
         if (Input.GetKey(KeyCode.D))
-            deltaX += MOVEMENT_SPEED;
+            deltaX += MOVEMENT_SPEED * Time.deltaTime;
         _teapot.transform.position += new Vector3(deltaX, deltaY, 0);
     }
 
@@ -67,11 +67,11 @@ public class TeapotManager : MonoBehaviour {
         var cameraPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cameraPosition.z = 0;
 
-        var dir = cameraPosition - transform.position;
+        var dir = cameraPosition - _teapot.transform.position;
         var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         _teapot.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        var yScale = (cameraPosition.x > 0) ? 1 : -1;
+        var yScale = (cameraPosition.x > _teapot.transform.position.x) ? 1 : -1;
         _teapot.transform.localScale = new Vector3(-1, yScale, 1);
     }
 }
