@@ -10,16 +10,18 @@ public class CoffeeMakerSpawner : MonoBehaviour {
 
     private float TIME_BETWEEN_SPAWNS = 5f;
     private float? lastSpawnTime = null;
+    const float SPAWN_DISTANCE = 5f;
 
-    
     // Use this for initialization
-    void Start () {
-        _spawnPoints.Add(new Vector3(-10,-10));
-        _spawnPoints.Add(new Vector3(10, -10));
-        _spawnPoints.Add(new Vector3(10, 10));
-        _spawnPoints.Add(new Vector3(-10, 10));
-        
+    void Start()
+    {
+
+        _spawnPoints.Add(new Vector3(-SPAWN_DISTANCE, -SPAWN_DISTANCE));
+        _spawnPoints.Add(new Vector3(SPAWN_DISTANCE, -SPAWN_DISTANCE));
+        _spawnPoints.Add(new Vector3(SPAWN_DISTANCE, SPAWN_DISTANCE));
+        _spawnPoints.Add(new Vector3(-SPAWN_DISTANCE, SPAWN_DISTANCE));
     }
+
 
 
 	
@@ -35,6 +37,7 @@ public class CoffeeMakerSpawner : MonoBehaviour {
     private void SpawnCoffeeMaker()
     {
         var randomIndex = new System.Random().Next(_spawnPoints.Count);
-        Instantiate(Cafetiere, _spawnPoints[randomIndex], Quaternion.identity);
+        var coffeeMaker = Instantiate(Cafetiere, _spawnPoints[randomIndex], Quaternion.identity) as GameObject;
+        coffeeMaker.transform.SetParent(transform);
     }
 }
