@@ -34,9 +34,10 @@ public class CurrencyManager : MonoBehaviour {
 
     public bool Spend(int amount)
     {
-        _balance -= amount;
-        var transactionSuccess = _balance >= 0;
-        _balance = Mathf.Max(0, _balance);
+        var transactionSuccess = _balance >= amount;
+        if (transactionSuccess)
+            _balance -= amount;
+
         return transactionSuccess;
     }
 }

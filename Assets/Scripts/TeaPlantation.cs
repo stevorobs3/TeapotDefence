@@ -18,10 +18,13 @@ public class TeaPlantation : MonoBehaviour {
 
     private CurrencyManager _currencyManager;
 
+    private GameObject _healthBar;
+
 
     private float lastTeaLeafSpawn;
     // Use this for initialization
     void Start () {
+        AssignHealthBar();
         AddSpawnPoints();
         SpawnTeaLeaf();
         _currencyManager = FindObjectOfType<CurrencyManager>();
@@ -38,6 +41,7 @@ public class TeaPlantation : MonoBehaviour {
     public bool TakeDamage(int amount)
     {
         _health -= amount;
+        _healthBar.transform.localScale = new Vector3((float)_health / MAX_HEAlTH, 1, 1);
         bool died = _health <= -0;
         if (died)
             Die();
@@ -94,7 +98,17 @@ public class TeaPlantation : MonoBehaviour {
     {
         foreach (Transform child in transform)
         {
-            _spawnPoints.Add(child);
+            if (child.name.Contains("SpawnPoint"))
+                _spawnPoints.Add(child);
+        }
+    }
+
+    void AssignHealthBar()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.name.Contains("HealthBar"))
+                _healthBar = child.gameObject;
         }
     }
 }

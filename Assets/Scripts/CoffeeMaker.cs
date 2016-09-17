@@ -8,14 +8,14 @@ public class CoffeeMaker : MonoBehaviour
 
     private float speed = 0.5f;
     private int _health = MAX_HEALTH;
-    private float lastAttack = Time.time;
+    private float? lastAttack;
 
     const int MAX_HEALTH = 10;
     const float ATTACK_COOLDOWN = 0.5F;
     const int ATTACK_DAMAGE = 5;
     void Start()
     {
-        _target = GameObject.FindGameObjectWithTag("TeaPlantation").GetComponent<TeaPlantation>();
+        ChooseTarget();
         foreach (Transform child in transform)
         {
             var sprite = child.GetComponent<SpriteRenderer>();
@@ -27,8 +27,14 @@ public class CoffeeMaker : MonoBehaviour
         }
     }
 
+    private void ChooseTarget()
+    {
+        _target = GameObject.FindGameObjectWithTag("TeaPlantation").GetComponent<TeaPlantation>();
+    }
+
     void Update()
     {
+        ChooseTarget();
         var direction = _target.transform.position - transform.position;
         var normalisedDirection = Vector3.Normalize(direction);
 
@@ -42,9 +48,13 @@ public class CoffeeMaker : MonoBehaviour
 
     private void Attack()
     {
-        if (Time.time - lastAttack > ATTACK_COOLDOWN)
+        if (lastAttack == null || Time.time - lastAttack > ATTACK_COOLDOWN)
         {
-            _target.TakeDamage(ATTACK_DAMAGE);
+            lastAttack = Time.time;
+            if (_target.TakeDamage(ATTACK_DAMAGE))
+            {
+                ChooseTarget();
+            }
         }
     }
 
