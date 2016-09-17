@@ -9,6 +9,9 @@ public class TeaPlantation : MonoBehaviour {
 
     const float TIME_BETWEEN_SPAWNS = 2F;
     const int TEAF_LEAF_VALUE = 1;
+    const int MAX_HEAlTH = 10;
+
+    float _health = MAX_HEAlTH;
 
     private List<Transform> _spawnPoints = new List<Transform>();
     private Dictionary<Vector3, GameObject> _teaLeaves = new Dictionary<Vector3, GameObject>();
@@ -31,6 +34,20 @@ public class TeaPlantation : MonoBehaviour {
             SpawnTeaLeaf();
         }        	
 	}
+
+    public bool TakeDamage(int amount)
+    {
+        _health -= amount;
+        bool died = _health <= -0;
+        if (died)
+            Die();
+        return died; 
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
 
     public void Harvest()
     {
