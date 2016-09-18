@@ -65,11 +65,6 @@ public class TeapotManager : MonoBehaviour {
         var cameraPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cameraPosition.z = 0;
 
-        var dir = cameraPosition - _teapot.transform.position;
-        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        _teapot.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-        var yScale = (cameraPosition.x > _teapot.transform.position.x) ? 1 : -1;
-        _teapot.transform.localScale = new Vector3(-1, yScale, 1);
+        TransformHelper.LookAtTarget(cameraPosition, ref _teapot);
     }
 }

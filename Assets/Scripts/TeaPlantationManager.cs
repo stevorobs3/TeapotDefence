@@ -47,6 +47,7 @@ public class TeaPlantationManager : MonoBehaviour {
     private void SpawnTeaPlantation(Vector3 position)
     {
         var teaPlantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<TeaPlantation>();
+        teaPlantation.transform.SetParent(transform);
         _teaPlantations.Add(position, teaPlantation);
     }
 }

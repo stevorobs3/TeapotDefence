@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class CoffeeMaker : MonoBehaviour
 {
@@ -30,7 +31,17 @@ public class CoffeeMaker : MonoBehaviour
 
     private void ChooseTarget()
     {
-        _target = GameObject.FindGameObjectWithTag("TeaPlantation").GetComponent<TeaPlantation>();
+        var targets = FindObjectsOfType<TeaPlantation>();
+        _target = targets.First();
+        foreach (var target in targets)
+        {
+            var distanceToTarget        = Vector3.Magnitude(transform.position - target.transform.position);
+            var distanceToCurrentTarget = Vector3.Magnitude(transform.position - _target.transform.position);
+            if (distanceToTarget < distanceToCurrentTarget)
+            {
+                _target = target;
+            }
+        }        
     }
 
     void Update()
@@ -40,7 +51,11 @@ public class CoffeeMaker : MonoBehaviour
         var normalisedDirection = Vector3.Normalize(direction);
 
         if (Vector3.Magnitude(direction) > 0.5f)
+        {
             transform.position += normalisedDirection * speed * Time.deltaTime;
+            var go = gameObject;
+            TransformHelper.LookAtTarget(_target.transform.position, ref go);
+        }
         else
         {
             Attack();
