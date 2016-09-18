@@ -9,7 +9,8 @@ public class TeaPlantation : MonoBehaviour {
 
     const float TIME_BETWEEN_SPAWNS = 2F;
     const int TEAF_LEAF_VALUE = 1;
-    const int MAX_HEAlTH = 10;
+    const float MAX_HEAlTH = 10;
+    const int BONUS = 1;
 
     float _health = MAX_HEAlTH;
 
@@ -17,6 +18,7 @@ public class TeaPlantation : MonoBehaviour {
     private Dictionary<Vector3, GameObject> _teaLeaves = new Dictionary<Vector3, GameObject>();
 
     private CurrencyManager _currencyManager;
+    private TeaPlantationManager _teaPlantationManager;
 
     private GameObject _healthBar;
 
@@ -24,6 +26,8 @@ public class TeaPlantation : MonoBehaviour {
     private float lastTeaLeafSpawn;
     // Use this for initialization
     void Start () {
+        _teaPlantationManager = FindObjectOfType<TeaPlantationManager>();
+
         AssignHealthBar();
         AddSpawnPoints();
         SpawnTeaLeaf();
@@ -38,7 +42,7 @@ public class TeaPlantation : MonoBehaviour {
         }        	
 	}
 
-    public bool TakeDamage(int amount)
+    public bool TakeDamage(float amount)
     {
         _health -= amount;
         _healthBar.transform.localScale = new Vector3((float)_health / MAX_HEAlTH, 1, 1);
@@ -50,12 +54,14 @@ public class TeaPlantation : MonoBehaviour {
 
     private void Die()
     {
+        _teaPlantationManager.RemoveTeaPlantation(transform.position);
         Destroy(gameObject);
     }
 
     public void Harvest()
     {
-        _currencyManager.Deposit(_teaLeaves.Count * TEAF_LEAF_VALUE);
+        var bonus = _teaLeaves.Count == _spawnPoints.Count ? BONUS : 0;
+        _currencyManager.Deposit(_teaLeaves.Count * TEAF_LEAF_VALUE + bonus);
         foreach (var teaLeaf in _teaLeaves)
         {
             Destroy(teaLeaf.Value);
@@ -72,6 +78,9 @@ public class TeaPlantation : MonoBehaviour {
             var teaLeaf = Instantiate(TeaLeaf, spawnLocation, RandomRotation()) as GameObject;
             teaLeaf.transform.SetParent(transform);
             _teaLeaves.Add(spawnLocation, teaLeaf);
+        }
+        else {
+            Harvest();
         }
     }
 

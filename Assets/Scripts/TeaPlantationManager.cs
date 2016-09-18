@@ -10,6 +10,7 @@ public class TeaPlantationManager : MonoBehaviour {
     private Dictionary<Vector3, TeaPlantation> _teaPlantations = new Dictionary<Vector3, TeaPlantation>();
     private CurrencyManager _currencyManager;
 
+    
     const int TEA_PLANTATION_COST = 10;
 
 	// Use this for initialization
@@ -37,6 +38,12 @@ public class TeaPlantationManager : MonoBehaviour {
             }
         }
 	}
+
+    public void RemoveTeaPlantation(Vector3 position)
+    {
+        _teaPlantations.Remove(position);
+    }
+
     private void SpawnTeaPlantation(Vector3 position)
     {
         var teaPlantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<TeaPlantation>();

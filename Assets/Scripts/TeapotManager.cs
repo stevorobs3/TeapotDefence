@@ -4,15 +4,19 @@ using System.Collections;
 public class TeapotManager : MonoBehaviour {
 
     public GameObject _teapotPrefab;
-    public GameObject _teapotSteamPrefab;
 
+
+    private ParticleSystem _teapotSteam;
+
+    private Vector3 _spawnLocation = new Vector3(0, 1, 0);
 
     private GameObject _teapot;
     void Awake()
     {
-        _teapot = Instantiate(_teapotPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+        _teapot = Instantiate(_teapotPrefab, _spawnLocation, Quaternion.identity) as GameObject;
         _teapot.transform.SetParent(gameObject.transform);
-        
+        _teapotSteam = _teapot.GetComponentInChildren<ParticleSystem>();
+        _teapotSteam.gameObject.SetActive(false);
     }
 
 
@@ -20,32 +24,26 @@ public class TeapotManager : MonoBehaviour {
     {
         FollowMouse();
         Move();
-        FireWeapon();
+        FireAttackSteam();
     }
 
     const float MOVEMENT_SPEED = 1.5f;
-    const float COOLDOWN = 0.333f;
-
-    float? lastFire;
-
-    private void FireWeapon()
-    {
-        if (Input.GetMouseButton(0) && (lastFire == null || (Time.time - lastFire) > COOLDOWN))
-        {
-            FireAttackSteam();
-            lastFire = Time.time;
-        }
-    }
 
     private void FireAttackSteam()
     {
-        var go = Instantiate(_teapotSteamPrefab, _teapot.transform) as GameObject;
-        go.transform.SetParent(transform, true);
-        go.transform.position = _teapot.transform.position;
-        go.transform.rotation = _teapot.transform.rotation;
-        var particles = go.GetComponent<ParticleSystem>();
-        particles.Play();
-        Destroy(go, particles.duration + particles.startLifetime);
+        if (Input.GetMouseButton(0))
+        {
+            if (!_teapotSteam.isPlaying)
+            {
+                _teapotSteam.gameObject.SetActive(true);
+                _teapotSteam.Play();
+            }
+        }
+        else
+        {
+            _teapotSteam.gameObject.SetActive(false);
+            _teapotSteam.Stop();
+        }
     }
 
     private void Move()
