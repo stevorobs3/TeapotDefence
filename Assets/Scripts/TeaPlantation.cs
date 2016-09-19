@@ -19,6 +19,7 @@ public class TeaPlantation : MonoBehaviour {
 
     private CurrencyManager _currencyManager;
     private TeaPlantationManager _teaPlantationManager;
+    private GameController _gameController;
 
     private GameObject _healthBar;
 
@@ -26,6 +27,7 @@ public class TeaPlantation : MonoBehaviour {
     private float lastTeaLeafSpawn;
     // Use this for initialization
     void Start () {
+        _gameController = FindObjectOfType<GameController>();
         _teaPlantationManager = FindObjectOfType<TeaPlantationManager>();
 
         AssignHealthBar();
@@ -45,7 +47,9 @@ public class TeaPlantation : MonoBehaviour {
     public bool TakeDamage(float amount)
     {
         _health -= amount;
-        _healthBar.transform.localScale = new Vector3((float)_health / MAX_HEAlTH, 1, 1);
+        var localScale = _healthBar.transform.localScale;
+         localScale.x = (float)_health / MAX_HEAlTH;
+        _healthBar.transform.localScale = localScale;
         bool died = _health <= -0;
         if (died)
             Die();
@@ -61,7 +65,9 @@ public class TeaPlantation : MonoBehaviour {
     public void Harvest()
     {
         var bonus = _teaLeaves.Count == _spawnPoints.Count ? BONUS : 0;
-        _currencyManager.Deposit(_teaLeaves.Count * TEAF_LEAF_VALUE + bonus);
+        var teaLeavesHarvested = _teaLeaves.Count * TEAF_LEAF_VALUE + bonus;
+        _gameController.TeaLeavesHarvested(teaLeavesHarvested);
+        _currencyManager.Deposit(teaLeavesHarvested);
         foreach (var teaLeaf in _teaLeaves)
         {
             Destroy(teaLeaf.Value);

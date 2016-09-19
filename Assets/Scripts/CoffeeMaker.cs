@@ -7,6 +7,8 @@ public class CoffeeMaker : MonoBehaviour
 
     private SpriteRenderer _healthBar;
 
+    private GameController _gameController;
+
     private float speed = 0.5f;
     private float _health = MAX_HEALTH;
     private float? lastAttack;
@@ -17,11 +19,11 @@ public class CoffeeMaker : MonoBehaviour
 
     void Start()
     {
+        _gameController = FindObjectOfType<GameController>();
         ChooseTarget();
         foreach (Transform child in transform)
         {
             var sprite = child.GetComponent<SpriteRenderer>();
-            Debug.Log("Setting health bar as " + child.name);
             if (sprite != null)
             {
                 _healthBar = sprite;
@@ -32,6 +34,12 @@ public class CoffeeMaker : MonoBehaviour
     private void ChooseTarget()
     {
         var targets = FindObjectsOfType<TeaPlantation>();
+        if (targets.Length == 0)
+        {
+            _target = null;
+            _gameController.EndGame();
+            return;
+        }
         _target = targets.First();
         foreach (var target in targets)
         {
@@ -47,6 +55,9 @@ public class CoffeeMaker : MonoBehaviour
     void Update()
     {
         ChooseTarget();
+        if (_target == null)
+            return;
+
         var direction = _target.transform.position - transform.position;
         var normalisedDirection = Vector3.Normalize(direction);
 
@@ -78,8 +89,10 @@ public class CoffeeMaker : MonoBehaviour
     public bool TakeDamage(float amount)
     {
         _health -= amount;
-        Debug.Log("Changing scale of " + _healthBar.name);
-        _healthBar.transform.localScale = new Vector3((float)_health / MAX_HEALTH, 1, 1);
+        var localScale = _healthBar.transform.localScale;
+        localScale.x = (float)_health / MAX_HEALTH;
+        _healthBar.transform.localScale = localScale;
+
         var died = _health <= 0;
 
         if (died)
@@ -90,6 +103,7 @@ public class CoffeeMaker : MonoBehaviour
     
     private void Die()
     {
+        _gameController.CafetieresKilled(1);
         Destroy(gameObject);
     }
 }

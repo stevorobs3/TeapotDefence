@@ -7,12 +7,16 @@ public class TeapotManager : MonoBehaviour {
 
 
     private ParticleSystem _teapotSteam;
+    private GameController _gameController;
 
     private Vector3 _spawnLocation = new Vector3(0, 1, 0);
+
+    const float STEAM_UNITS_PER_SECOND = 2F;
 
     private GameObject _teapot;
     void Awake()
     {
+        _gameController = FindObjectOfType<GameController>();   
         _teapot = Instantiate(_teapotPrefab, _spawnLocation, Quaternion.identity) as GameObject;
         _teapot.transform.SetParent(gameObject.transform);
         _teapotSteam = _teapot.GetComponentInChildren<ParticleSystem>();
@@ -33,6 +37,7 @@ public class TeapotManager : MonoBehaviour {
     {
         if (Input.GetMouseButton(0))
         {
+            _gameController.SteamUsed(STEAM_UNITS_PER_SECOND * Time.deltaTime);
             if (!_teapotSteam.isPlaying)
             {
                 _teapotSteam.gameObject.SetActive(true);

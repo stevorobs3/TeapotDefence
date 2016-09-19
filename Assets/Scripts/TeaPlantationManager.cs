@@ -9,12 +9,14 @@ public class TeaPlantationManager : MonoBehaviour {
 
     private Dictionary<Vector3, TeaPlantation> _teaPlantations = new Dictionary<Vector3, TeaPlantation>();
     private CurrencyManager _currencyManager;
+    private GameController _gameController;
 
-    
+
     const int TEA_PLANTATION_COST = 10;
 
 	// Use this for initialization
 	void Start () {
+        _gameController = FindObjectOfType<GameController>();
         SpawnTeaPlantation(Vector3.zero);
         _currencyManager = FindObjectOfType<CurrencyManager>();
     }
@@ -46,6 +48,7 @@ public class TeaPlantationManager : MonoBehaviour {
 
     private void SpawnTeaPlantation(Vector3 position)
     {
+        _gameController.TeaPlantationBuilt(1);
         var teaPlantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<TeaPlantation>();
         teaPlantation.transform.SetParent(transform);
         _teaPlantations.Add(position, teaPlantation);
