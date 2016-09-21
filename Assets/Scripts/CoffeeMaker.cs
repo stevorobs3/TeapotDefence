@@ -11,11 +11,10 @@ public class CoffeeMaker : MonoBehaviour
 
     private float speed = 0.5f;
     private float _health = MAX_HEALTH;
-    private float? lastAttack;
-
+    
     const float MAX_HEALTH = 10;
     const float ATTACK_COOLDOWN = 0.5F;
-    const int ATTACK_DAMAGE = 5;
+    const float ATTACK_DAMAGE = 3;
 
     void Start()
     {
@@ -75,13 +74,9 @@ public class CoffeeMaker : MonoBehaviour
 
     private void Attack()
     {
-        if (lastAttack == null || Time.time - lastAttack > ATTACK_COOLDOWN)
+        if (_target.TakeDamage(ATTACK_DAMAGE * Time.deltaTime))
         {
-            lastAttack = Time.time;
-            if (_target.TakeDamage(ATTACK_DAMAGE))
-            {
-                ChooseTarget();
-            }
+            ChooseTarget();
         }
     }
 
