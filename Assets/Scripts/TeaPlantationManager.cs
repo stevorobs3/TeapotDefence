@@ -10,6 +10,7 @@ public class TeaPlantationManager : MonoBehaviour {
     private Dictionary<Vector3, TeaPlantation> _teaPlantations = new Dictionary<Vector3, TeaPlantation>();
     private CurrencyManager _currencyManager;
     private GameController _gameController;
+    private HotbarManager _hotbarManager;
 
 
     const int TEA_PLANTATION_COST = 10;
@@ -17,13 +18,14 @@ public class TeaPlantationManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         _gameController = FindObjectOfType<GameController>();
+        _hotbarManager = FindObjectOfType<HotbarManager>();
         SpawnTeaPlantation(Vector3.zero);
         _currencyManager = FindObjectOfType<CurrencyManager>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             var spawnLocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             spawnLocation.z = 0;
@@ -35,7 +37,7 @@ public class TeaPlantationManager : MonoBehaviour {
                 Debug.Log("Harvesting!");
                 _teaPlantations[spawnLocation].Harvest();
             }
-            else if (_currencyManager.Spend(TEA_PLANTATION_COST)) {
+            else if (_hotbarManager.CurrentlySelectedItem() == SelectedItem.TeaPlantation && _currencyManager.Spend(TEA_PLANTATION_COST)) {
                 SpawnTeaPlantation(spawnLocation);
             }
         }

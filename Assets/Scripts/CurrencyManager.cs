@@ -10,6 +10,9 @@ public class CurrencyManager : MonoBehaviour {
     void Start()
     {
         _text = GetComponent<Text>();
+#if UNITY_EDITOR
+        _balance = 9999;
+#endif
     }
 
     void Update()

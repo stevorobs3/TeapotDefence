@@ -9,6 +9,8 @@ public class TeapotManager : MonoBehaviour {
     private ParticleSystem _teapotSteam;
     private GameController _gameController;
 
+    private HotbarManager _hotbarManager;
+
     private Vector3 _spawnLocation = new Vector3(0, 1, 0);
 
     const float STEAM_UNITS_PER_SECOND = 2F;
@@ -16,11 +18,17 @@ public class TeapotManager : MonoBehaviour {
     private GameObject _teapot;
     void Awake()
     {
-        _gameController = FindObjectOfType<GameController>();   
+        _gameController = FindObjectOfType<GameController>();
+        _hotbarManager = FindObjectOfType<HotbarManager>();
         _teapot = Instantiate(_teapotPrefab, _spawnLocation, Quaternion.identity) as GameObject;
         _teapot.transform.SetParent(gameObject.transform);
         _teapotSteam = _teapot.GetComponentInChildren<ParticleSystem>();
         _teapotSteam.gameObject.SetActive(false);
+    }
+
+    void UpgradeTeapot()
+    {
+
     }
 
 
@@ -35,7 +43,7 @@ public class TeapotManager : MonoBehaviour {
 
     private void FireAttackSteam()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && _hotbarManager.CurrentlySelectedItem() == SelectedItem.Steam)
         {
             _gameController.SteamUsed(STEAM_UNITS_PER_SECOND * Time.deltaTime);
             if (!_teapotSteam.isPlaying)
@@ -71,5 +79,12 @@ public class TeapotManager : MonoBehaviour {
         cameraPosition.z = 0;
 
         TransformHelper.LookAtTarget(cameraPosition, ref _teapot);
+        var yScale = (cameraPosition.x > _teapot.transform.position.x) ? 1 : -1;
+        var localScale = _teapotSteam.gameObject.transform.GetChild(0).localScale;
+        if (yScale * localScale.y < 0)
+        {
+            localScale.y *= -1;
+            _teapotSteam.gameObject.transform.GetChild(0).localScale = localScale;
+        }
     }
 }
