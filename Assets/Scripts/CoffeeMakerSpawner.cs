@@ -13,8 +13,8 @@ public class CoffeeMakerSpawner : MonoBehaviour {
     const int   SPAWN_RATE_INCREASE = 10;
 
     private float? lastSpawnTime = null;
-    const float SPAWN_DISTANCE_X = 4f;
-    const float SPAWN_DISTANCE_Y = 2.5f;
+    const float SPAWN_DISTANCE_X = 5.5f;
+    const float SPAWN_DISTANCE_Y = 4.5f;
 
     private int _spawnCount;
 

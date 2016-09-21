@@ -6,11 +6,11 @@ public class TileManager : MonoBehaviour {
     public GameObject GrassTile;
 
     const int PIXELS_PER_TILE = 128;
-    const int NUM_TILES_HIGH  = 8;
-    const int NUM_TILES_WIDE = 10;
+    const int NUM_TILES_HIGH  = 9;
+    const int NUM_TILES_WIDE = 11;
 
-    const float X_OFFSET = -4f;
-    const float Y_OFFSET = -3f;
+    const float X_OFFSET = -5.5f;
+    const float Y_OFFSET = -4.5f;
 
     // Use this for initialization
     void Awake () {
