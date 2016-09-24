@@ -9,15 +9,17 @@ public class CoffeeMaker : MonoBehaviour
 
     private GameController _gameController;
 
-    private float speed = 0.5f;
-    private float _health = MAX_HEALTH;
     
-    const float MAX_HEALTH = 10;
-    const float ATTACK_COOLDOWN = 0.5F;
-    const float ATTACK_DAMAGE = 3;
+    private float _health;
+
+    public float speed = 0.5f;
+    public float _maxHealth = 10;
+    public float _attackDamagePerSecond = 3;
 
     void Start()
     {
+
+        _health = _maxHealth;
         _gameController = FindObjectOfType<GameController>();
         ChooseTarget();
         foreach (Transform child in transform)
@@ -74,7 +76,7 @@ public class CoffeeMaker : MonoBehaviour
 
     private void Attack()
     {
-        if (_target.TakeDamage(ATTACK_DAMAGE * Time.deltaTime))
+        if (_target.TakeDamage(_attackDamagePerSecond * Time.deltaTime))
         {
             ChooseTarget();
         }
@@ -85,7 +87,7 @@ public class CoffeeMaker : MonoBehaviour
     {
         _health -= amount;
         var localScale = _healthBar.transform.localScale;
-        localScale.x = (float)_health / MAX_HEALTH;
+        localScale.x = (float)_health / _maxHealth;
         _healthBar.transform.localScale = localScale;
 
         var died = _health <= 0;

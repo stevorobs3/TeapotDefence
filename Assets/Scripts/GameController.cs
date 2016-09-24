@@ -39,19 +39,25 @@ public class GameController : MonoBehaviour {
     }
 
 
-		
-	public void EndGame()
-    {
-        PlayerPrefsWrapper.CafetieresKilled = _cafetieresKilled;
-        PlayerPrefsWrapper.TeaLeavesHarvested = _teaLeavesHarvested;
-        PlayerPrefsWrapper.SteamUsed = _steamUsed;
-        PlayerPrefsWrapper.TeaPlantationsBuilt = _teaPlantationsBuilt;
 
-        SceneManager.LoadScene(1);
+    private bool gameIsEnding = false;
+    public void EndGame()
+    {
+        if (!gameIsEnding)
+        {
+            gameIsEnding = true;
+            PlayerPrefsWrapper.CafetieresKilled = _cafetieresKilled;
+            PlayerPrefsWrapper.TeaLeavesHarvested = _teaLeavesHarvested;
+            PlayerPrefsWrapper.SteamUsed = _steamUsed;
+            PlayerPrefsWrapper.TeaPlantationsBuilt = _teaPlantationsBuilt;
+            SceneManager.LoadScene(1);
+        }
     }
+
 
     public void ReturnToGame()
     {
+        gameIsEnding = false;
         SceneManager.LoadScene(0);
     }
 }

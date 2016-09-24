@@ -62,9 +62,9 @@ public class Steam: MonoBehaviour
         _currencyManager = FindObjectOfType<CurrencyManager>();
         _particles = transform.parent.gameObject.GetComponent<ParticleSystem>();
         _hotbarManager.ItemSelected += (selectedItem) => {
-            if (selectedItem == SelectedItem.SteamDamageUpgrade && _currencyManager.Spend(ATTACK_UPGRADE_COST * (_attackUpgradeLevel + 2)))
+            if (selectedItem == SelectedItem.SteamDamageUpgrade && (_attackUpgradeLevel < _upgradeColours.Count - 1) && _currencyManager.Spend(ATTACK_UPGRADE_COST * (_attackUpgradeLevel + 2)))
                 UpgradeSteamAttack();
-            else if (selectedItem == SelectedItem.SteamRangeUpgrade && _currencyManager.Spend(RANGE_UPGRADE_COST * (_rangeUpgradeLevel + 2)))
+            else if (selectedItem == SelectedItem.SteamRangeUpgrade && (_rangeUpgradeLevel < _upgradeRanges.Count - 1) && _currencyManager.Spend(RANGE_UPGRADE_COST * (_rangeUpgradeLevel + 2)))
                 UpgradeSteamRange();
         };
 
@@ -72,25 +72,21 @@ public class Steam: MonoBehaviour
 
     private void UpgradeSteamAttack()
     {
-        if (_attackUpgradeLevel < _upgradeColours.Count - 1) {
-            _attackUpgradeLevel++;
-            _particles.startColor = _upgradeColours[_attackUpgradeLevel];
-            DPS += DPS_BONUS;
-        }
+        _attackUpgradeLevel++;
+        _particles.startColor = _upgradeColours[_attackUpgradeLevel];
+        DPS += DPS_BONUS;
     }
+
 
     private void UpgradeSteamRange()
     {
-        if (_rangeUpgradeLevel < _upgradeRanges.Count - 1)
-        {
-            _rangeUpgradeLevel++;
-            var upgradeLevel = _upgradeRanges[_rangeUpgradeLevel];
-            _particles.startLifetime = upgradeLevel.StartLifetime;
-            var localScale = transform.localScale;
-            localScale.x = upgradeLevel.XCollider;
-            localScale.y = upgradeLevel.YCollider;
-            transform.localScale = localScale;
-        }
+        _rangeUpgradeLevel++;
+        var upgradeLevel = _upgradeRanges[_rangeUpgradeLevel];
+        _particles.startLifetime = upgradeLevel.StartLifetime;
+        var localScale = transform.localScale;
+        localScale.x = upgradeLevel.XCollider;
+        localScale.y = upgradeLevel.YCollider;
+        transform.localScale = localScale;
     }
 
 

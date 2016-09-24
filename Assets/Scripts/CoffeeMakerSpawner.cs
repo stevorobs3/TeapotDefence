@@ -7,6 +7,7 @@ public class CoffeeMakerSpawner : MonoBehaviour {
     private List<Vector3> _spawnPoints = new List<Vector3>();
 
     public GameObject _cafetiere;
+    public GameObject _italianStove;
 
     private float _timeBetweenSpawns;
     private float _minTimeBetweenSpawns = 5f;
@@ -55,11 +56,26 @@ public class CoffeeMakerSpawner : MonoBehaviour {
     {
         for (int i = 0; i < amount; i++)
         {
-            SpawnCoffeeMaker();
+            GameObject coffeeMaker = ChooseCoffeeMaker();
+            SpawnCoffeeMaker(coffeeMaker);
         }
     }
 
-    private void SpawnCoffeeMaker()
+    private GameObject ChooseCoffeeMaker()
+    {
+        bool shouldSpawnItalianStove = _randomGenerator.NextBoolean(0.25f);
+        if (_spawnCount < 10 || !shouldSpawnItalianStove)
+        {
+            return _cafetiere;
+        }
+        else
+        {
+            return _italianStove;
+        }
+    }
+
+
+    private void SpawnCoffeeMaker(GameObject coffeeMakerPrefab)
     {
         _spawnCount++;
         if (_spawnCount % SPAWN_RATE_INCREASE == 0)
@@ -70,7 +86,7 @@ public class CoffeeMakerSpawner : MonoBehaviour {
             _maxTimeBetweenSpawns = Mathf.Max(MAX_SPAWN_RATE, _maxTimeBetweenSpawns);
         }
         Vector3 spawnPoint = RandomSpawnPoint();
-        var coffeeMaker = Instantiate(_cafetiere, spawnPoint, Quaternion.identity) as GameObject;
+        var coffeeMaker = Instantiate(coffeeMakerPrefab, spawnPoint, Quaternion.identity) as GameObject;
         coffeeMaker.transform.SetParent(transform);
     }
 
