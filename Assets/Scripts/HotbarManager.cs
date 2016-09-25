@@ -10,9 +10,6 @@ public class HotbarManager : MonoBehaviour
     Image _selectedSlot;
     SelectedItem _selectedItem;
 
-    private Color UNSELECTED_COLOUR = Color.black;
-    private Color SELECTED_COLOUR = new Color32(102, 51, 0, 255);
-
     public delegate void ItemSelectedHandler(SelectedItem item);
     public event ItemSelectedHandler ItemSelected;
 
@@ -47,10 +44,6 @@ public class HotbarManager : MonoBehaviour
             SelectSlot(0);
         else if (Input.GetKeyDown(KeyCode.Alpha2))
             SelectSlot(1);
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && ItemSelected != null)
-            ItemSelected(SelectedItem.SteamDamageUpgrade);
-        else if (Input.GetKeyDown(KeyCode.Alpha4) && ItemSelected != null)
-            ItemSelected(SelectedItem.SteamRangeUpgrade);
     }
 
     public SelectedItem CurrentlySelectedItem()

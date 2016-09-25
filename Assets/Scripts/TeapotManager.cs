@@ -11,26 +11,30 @@ public class TeapotManager : MonoBehaviour {
 
     private HotbarManager _hotbarManager;
 
+    private UpgradeManager _upgradeManager;
+
     private Vector3 _spawnLocation = new Vector3(0, 1, 0);
 
     const float STEAM_UNITS_PER_SECOND = 2F;
 
-    private GameObject _teapot;
+    public GameObject Teapot;
     void Awake()
     {
+        _upgradeManager = FindObjectOfType<UpgradeManager>();
         _gameController = FindObjectOfType<GameController>();
         _hotbarManager = FindObjectOfType<HotbarManager>();
-        _teapot = Instantiate(_teapotPrefab, _spawnLocation, Quaternion.identity) as GameObject;
-        _teapot.transform.SetParent(gameObject.transform);
-        _teapotSteam = _teapot.GetComponentInChildren<ParticleSystem>();
+        Teapot = Instantiate(_teapotPrefab, _spawnLocation, Quaternion.identity) as GameObject;
+        Teapot.transform.SetParent(gameObject.transform);
+        _teapotSteam = Teapot.GetComponentInChildren<ParticleSystem>();
         _teapotSteam.gameObject.SetActive(false);
+
+        _upgradeManager.SpeedUpgraded += UpgradeSpeed;
     }
 
-    void UpgradeTeapot()
+    void UpgradeSpeed(TeapotSpeedUpgrade speedUpgrade)
     {
-
+        _speed = speedUpgrade.Value;
     }
-
 
     void Update ()
     {
@@ -39,7 +43,7 @@ public class TeapotManager : MonoBehaviour {
         FireAttackSteam();
     }
 
-    const float MOVEMENT_SPEED = 1.5f;
+    private float _speed = 1.5f;
 
     private void FireAttackSteam()
     {
@@ -63,14 +67,14 @@ public class TeapotManager : MonoBehaviour {
     {
         float deltaX = 0, deltaY = 0;
         if (Input.GetKey(KeyCode.W))
-            deltaY += MOVEMENT_SPEED * Time.deltaTime;
+            deltaY += _speed * Time.deltaTime;
         if (Input.GetKey(KeyCode.S))
-            deltaY -= MOVEMENT_SPEED * Time.deltaTime;
+            deltaY -= _speed * Time.deltaTime;
         if (Input.GetKey(KeyCode.A))
-            deltaX -= MOVEMENT_SPEED * Time.deltaTime;
+            deltaX -= _speed * Time.deltaTime;
         if (Input.GetKey(KeyCode.D))
-            deltaX += MOVEMENT_SPEED * Time.deltaTime;
-        _teapot.transform.position += new Vector3(deltaX, deltaY, 0);
+            deltaX += _speed * Time.deltaTime;
+        Teapot.transform.position += new Vector3(deltaX, deltaY, 0);
     }
 
     private void FollowMouse()
@@ -78,8 +82,8 @@ public class TeapotManager : MonoBehaviour {
         var cameraPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cameraPosition.z = 0;
 
-        TransformHelper.LookAtTarget(cameraPosition, ref _teapot);
-        var yScale = (cameraPosition.x > _teapot.transform.position.x) ? 1 : -1;
+        TransformHelper.LookAtTarget(cameraPosition, ref Teapot);
+        var yScale = (cameraPosition.x > Teapot.transform.position.x) ? 1 : -1;
         var localScale = _teapotSteam.gameObject.transform.GetChild(0).localScale;
         if (yScale * localScale.y < 0)
         {

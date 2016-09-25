@@ -1,10 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class CoffeeMakerSpawner : MonoBehaviour {
-
-    private List<Vector3> _spawnPoints = new List<Vector3>();
 
     public GameObject _cafetiere;
     public GameObject _italianStove;
@@ -104,7 +100,6 @@ public class CoffeeMakerSpawner : MonoBehaviour {
             float x = SPAWN_DISTANCE_X * (isRight ? -1 : 1);
             
             float y = _randomGenerator.NextFloat(-SPAWN_DISTANCE_Y, SPAWN_DISTANCE_Y);
-            Debug.Log("Spawning on " + (isRight ? "left" : "right") + " at y " + y);
             return new Vector3(x, y);
         }
         else
@@ -113,7 +108,6 @@ public class CoffeeMakerSpawner : MonoBehaviour {
             float y = SPAWN_DISTANCE_Y * (isTop ? 1 : -1);
 
             float x = _randomGenerator.NextFloat(-SPAWN_DISTANCE_X, SPAWN_DISTANCE_X);
-            Debug.Log("Spawning on " + (isTop ? "top" : "bottom") + " at x " + x);
             return new Vector3(x, y);
         }
     }
