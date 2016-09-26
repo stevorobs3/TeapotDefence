@@ -802,6 +802,7 @@ GameObject:
   - 224: {fileID: 1024147734}
   - 222: {fileID: 1024147736}
   - 114: {fileID: 1024147735}
+  - 114: {fileID: 1024147737}
   m_Layer: 5
   m_Name: Property
   m_TagString: Untagged
@@ -859,13 +860,31 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Tea Plantations Built:  '
+  m_Text: 'Tea Plantations Built: '
 --- !u!222 &1024147736
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1024147733}
+--- !u!114 &1024147737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1024147733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 530
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
 --- !u!1 &1295525964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,6 +1043,7 @@ GameObject:
   - 224: {fileID: 1396100451}
   - 222: {fileID: 1396100453}
   - 114: {fileID: 1396100452}
+  - 114: {fileID: 1396100454}
   m_Layer: 5
   m_Name: Property
   m_TagString: Untagged
@@ -1081,13 +1101,31 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Cafetieres killed:    '
+  m_Text: 'Cafetieres killed: '
 --- !u!222 &1396100453
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1396100450}
+--- !u!114 &1396100454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1396100450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 530
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
 --- !u!1 &1456994237
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,10 +1158,10 @@ RectTransform:
   - {fileID: 552069256}
   m_Father: {fileID: 24118923}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -192}
-  m_SizeDelta: {x: 1024, y: 384}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -259.25}
+  m_SizeDelta: {x: -2, y: -518.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1456994239
 MonoBehaviour:
@@ -1263,10 +1301,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 24118923}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030517578, y: 192}
-  m_SizeDelta: {x: 1024, y: 384}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 252.75}
+  m_SizeDelta: {x: -2, y: -505.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569578575
 MonoBehaviour:
@@ -1389,99 +1427,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1729998347}
---- !u!1 &1732698981
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1000011727654294, guid: 5de24839e48913645bf782195d7a0c00,
-    type: 2}
-  m_PrefabInternal: {fileID: 1833879924}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1732698986}
-  - 20: {fileID: 1732698985}
-  - 92: {fileID: 1732698984}
-  - 124: {fileID: 1732698983}
-  - 81: {fileID: 1732698982}
-  m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!81 &1732698982
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 81000013311369858, guid: 5de24839e48913645bf782195d7a0c00,
-    type: 2}
-  m_PrefabInternal: {fileID: 1833879924}
-  m_GameObject: {fileID: 1732698981}
-  m_Enabled: 1
---- !u!124 &1732698983
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 124000014190333436, guid: 5de24839e48913645bf782195d7a0c00,
-    type: 2}
-  m_PrefabInternal: {fileID: 1833879924}
-  m_GameObject: {fileID: 1732698981}
-  m_Enabled: 1
---- !u!92 &1732698984
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 92000010301120292, guid: 5de24839e48913645bf782195d7a0c00,
-    type: 2}
-  m_PrefabInternal: {fileID: 1833879924}
-  m_GameObject: {fileID: 1732698981}
-  m_Enabled: 1
---- !u!20 &1732698985
-Camera:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 20000013162820240, guid: 5de24839e48913645bf782195d7a0c00,
-    type: 2}
-  m_PrefabInternal: {fileID: 1833879924}
-  m_GameObject: {fileID: 1732698981}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.38235295, g: 0.38235295, b: 0.38235295, a: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 1
-  orthographic size: 4
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
---- !u!4 &1732698986
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4000010806926152, guid: 5de24839e48913645bf782195d7a0c00,
-    type: 2}
-  m_PrefabInternal: {fileID: 1833879924}
-  m_GameObject: {fileID: 1732698981}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
 --- !u!1001 &1833879924
 Prefab:
   m_ObjectHideFlags: 0
@@ -1538,7 +1483,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5de24839e48913645bf782195d7a0c00, type: 2}
-  m_RootGameObject: {fileID: 1732698981}
   m_IsPrefabParent: 0
 --- !u!1 &1895166833
 GameObject:
@@ -1550,6 +1494,7 @@ GameObject:
   - 224: {fileID: 1895166834}
   - 222: {fileID: 1895166836}
   - 114: {fileID: 1895166835}
+  - 114: {fileID: 1895166837}
   m_Layer: 5
   m_Name: Property
   m_TagString: Untagged
@@ -1614,6 +1559,24 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1895166833}
+--- !u!114 &1895166837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1895166833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 530
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
 --- !u!1 &2080628469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1698,6 +1661,7 @@ GameObject:
   - 224: {fileID: 2130092527}
   - 222: {fileID: 2130092529}
   - 114: {fileID: 2130092528}
+  - 114: {fileID: 2130092530}
   m_Layer: 5
   m_Name: Property
   m_TagString: Untagged
@@ -1755,10 +1719,28 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Steam Used:  '
+  m_Text: 'Steam Used: '
 --- !u!222 &2130092529
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2130092526}
+--- !u!114 &2130092530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2130092526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 530
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
