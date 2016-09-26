@@ -1,10 +1,10 @@
 ﻿
 public class TeapotSpeedUpgrade : TeapotUpgrade
 {
-    public static readonly TeapotSpeedUpgrade Level0 = new TeapotSpeedUpgrade(20, 1);
-    public static readonly TeapotSpeedUpgrade Level1 = new TeapotSpeedUpgrade(40, 2);
-    public static readonly TeapotSpeedUpgrade Level2 = new TeapotSpeedUpgrade(60, 3);
-    public static readonly TeapotSpeedUpgrade Level3 = new TeapotSpeedUpgrade(80, 4);
+    public static readonly TeapotSpeedUpgrade Level0 = new TeapotSpeedUpgrade(0, 1);
+    public static readonly TeapotSpeedUpgrade Level1 = new TeapotSpeedUpgrade(20, 2);
+    public static readonly TeapotSpeedUpgrade Level2 = new TeapotSpeedUpgrade(40, 3);
+    public static readonly TeapotSpeedUpgrade Level3 = new TeapotSpeedUpgrade(60, 4);
 
     public static TeapotSpeedUpgrade[] Upgrades = new TeapotSpeedUpgrade[4]
     {
