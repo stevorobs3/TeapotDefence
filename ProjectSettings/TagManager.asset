@@ -44,7 +44,7 @@ TagManager:
   - name: Floor
     uniqueID: 2027779621
     locked: 0
-  - name: TeaPlantation
+  - name: PlaceableEntity
     uniqueID: 148340717
     locked: 0
   - name: TeaLeaves

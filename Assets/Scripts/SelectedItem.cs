@@ -1,1 +1,1 @@
-﻿public enum SelectedItem { Steam, TeaPlantation, SteamDamageUpgrade, SteamRangeUpgrade};
+﻿public enum SelectedItem { Steam, TeaPlantation, NotNiceBiscuit};

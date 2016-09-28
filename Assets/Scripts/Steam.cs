@@ -43,7 +43,7 @@ public class Steam: MonoBehaviour
         var elementsToRemove = new List<CoffeeMaker>();
         foreach (var coffeeMaker in _currentTargets)
         {
-            if (coffeeMaker.TakeDamage(_dps * Time.deltaTime))
+            if (coffeeMaker == null || coffeeMaker.TakeDamage(_dps * Time.deltaTime))
                 elementsToRemove.Add(coffeeMaker);
         }
         foreach (var element in elementsToRemove)

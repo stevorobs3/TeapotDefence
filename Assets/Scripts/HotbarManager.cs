@@ -44,6 +44,8 @@ public class HotbarManager : MonoBehaviour
             SelectSlot(0);
         else if (Input.GetKeyDown(KeyCode.Alpha2))
             SelectSlot(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            SelectSlot(2);
     }
 
     public SelectedItem CurrentlySelectedItem()
@@ -63,8 +65,6 @@ public class HotbarManager : MonoBehaviour
         _selectedItem = (SelectedItem)index;
 
         if (index == 2 && ItemSelected != null)
-            ItemSelected(SelectedItem.SteamDamageUpgrade);
-        else if (index == 3 && ItemSelected != null)
-            ItemSelected(SelectedItem.SteamRangeUpgrade);
+            ItemSelected(SelectedItem.NotNiceBiscuit);
     }
 }
