@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class TeapotDPSUpgrade : TeapotUpgrade
+public class TeapotDPSUpgrade : Upgrade
 {
     public static readonly TeapotDPSUpgrade Level0 = new TeapotDPSUpgrade(0, 5, Color.white);
     public static readonly TeapotDPSUpgrade Level1 = new TeapotDPSUpgrade(20, 7, Color.red);

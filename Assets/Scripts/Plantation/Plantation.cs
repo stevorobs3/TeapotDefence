@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TeaPlantation : MonoBehaviour {
+public class Plantation : MonoBehaviour {
 
 
     public GameObject TeaLeaf;
@@ -18,7 +18,7 @@ public class TeaPlantation : MonoBehaviour {
     private Dictionary<Vector3, GameObject> _teaLeaves = new Dictionary<Vector3, GameObject>();
 
     private CurrencyManager _currencyManager;
-    private TeaPlantationManager _teaPlantationManager;
+    private PlantationManager _plantationManager;
     private GameController _gameController;
 
     private GameObject _healthBar;
@@ -28,7 +28,7 @@ public class TeaPlantation : MonoBehaviour {
     // Use this for initialization
     void Start () {
         _gameController = FindObjectOfType<GameController>();
-        _teaPlantationManager = FindObjectOfType<TeaPlantationManager>();
+        _plantationManager = FindObjectOfType<PlantationManager>();
 
         AssignHealthBar();
         AddSpawnPoints();
@@ -58,7 +58,7 @@ public class TeaPlantation : MonoBehaviour {
 
     private void Die()
     {
-        _teaPlantationManager.RemoveTeaPlantation(transform.position);
+        _plantationManager.RemoveTeaPlantation(transform.position);
         Destroy(gameObject);
     }
 

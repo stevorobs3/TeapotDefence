@@ -11,7 +11,7 @@ public class TeapotManager : MonoBehaviour {
 
     private HotbarManager _hotbarManager;
 
-    private UpgradeManager _upgradeManager;
+    private TeapotUpgradeManager _upgradeManager;
 
     private Vector3 _spawnLocation = new Vector3(0, 1, 0);
 
@@ -20,7 +20,7 @@ public class TeapotManager : MonoBehaviour {
     public GameObject Teapot;
     void Awake()
     {
-        _upgradeManager = FindObjectOfType<UpgradeManager>();
+        _upgradeManager = FindObjectOfType<TeapotUpgradeManager>();
         _gameController = FindObjectOfType<GameController>();
         _hotbarManager = FindObjectOfType<HotbarManager>();
         Teapot = Instantiate(_teapotPrefab, _spawnLocation, Quaternion.identity) as GameObject;

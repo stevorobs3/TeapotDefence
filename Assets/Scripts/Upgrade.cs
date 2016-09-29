@@ -1,10 +1,10 @@
-﻿public abstract class TeapotUpgrade
+﻿public abstract class Upgrade
 {
     private int _cost;
     private float _value;
     private string _title;
 
-    public TeapotUpgrade(int cost, float value, string title) {
+    public Upgrade(int cost, float value, string title) {
         _value = value;
         _cost = cost;
         _title = title;

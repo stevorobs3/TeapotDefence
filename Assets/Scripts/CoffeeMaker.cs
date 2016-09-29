@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CoffeeMaker : MonoBehaviour
 {
-    private TeaPlantation _target;
+    private Plantation _target;
 
     private SpriteRenderer _healthBar;
 
@@ -34,7 +34,7 @@ public class CoffeeMaker : MonoBehaviour
 
     private void ChooseTarget()
     {
-        var targets = FindObjectsOfType<TeaPlantation>();
+        var targets = FindObjectsOfType<Plantation>();
         if (targets.Length == 0)
         {
             _target = null;

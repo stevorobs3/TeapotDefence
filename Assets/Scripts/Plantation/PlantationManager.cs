@@ -2,12 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TeaPlantationManager : MonoBehaviour {
+public class PlantationManager : MonoBehaviour {
 
     public GameObject _teaPlantationPrefab;
 
 
-    private Dictionary<Vector3, TeaPlantation> _teaPlantations = new Dictionary<Vector3, TeaPlantation>();
+    private Dictionary<Vector3, Plantation> _teaPlantations = new Dictionary<Vector3, Plantation>();
     private CurrencyManager _currencyManager;
     private GameController _gameController;
     private HotbarManager _hotbarManager;
@@ -50,8 +50,8 @@ public class TeaPlantationManager : MonoBehaviour {
 
     private void SpawnTeaPlantation(Vector3 position)
     {
-        _gameController.TeaPlantationBuilt(1);
-        var teaPlantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<TeaPlantation>();
+        _gameController.PlantationsBuilt(1);
+        var teaPlantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<Plantation>();
         teaPlantation.transform.SetParent(transform);
         _teaPlantations.Add(position, teaPlantation);
     }

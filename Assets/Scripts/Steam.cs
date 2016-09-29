@@ -10,15 +10,15 @@ public class Steam: MonoBehaviour
 
     public float _dps = 5;
     
-    UpgradeManager _upgradeManager;
+    TeapotUpgradeManager _teapotUpgradeManager;
 
     ParticleSystem _particles;
 
     void Awake()
     {
-        _upgradeManager = FindObjectOfType<UpgradeManager>();
-        _upgradeManager.RangeUpgraded += UpgradeSteamRange;
-        _upgradeManager.DPSUpgraded += UpgradeSteamAttack;
+        _teapotUpgradeManager = FindObjectOfType<TeapotUpgradeManager>();
+        _teapotUpgradeManager.RangeUpgraded += UpgradeSteamRange;
+        _teapotUpgradeManager.DPSUpgraded += UpgradeSteamAttack;
 
         _particles = transform.parent.gameObject.GetComponent<ParticleSystem>();
     }

@@ -1,5 +1,5 @@
 ﻿
-public class TeapotSpeedUpgrade : TeapotUpgrade
+public class TeapotSpeedUpgrade : Upgrade
 {
     public static readonly TeapotSpeedUpgrade Level0 = new TeapotSpeedUpgrade(0, 1);
     public static readonly TeapotSpeedUpgrade Level1 = new TeapotSpeedUpgrade(20, 2);
@@ -11,7 +11,7 @@ public class TeapotSpeedUpgrade : TeapotUpgrade
         Level0, Level1, Level2, Level3
     };
 
-    public static TeapotUpgradeManager<TeapotSpeedUpgrade> UpgradeManager = new TeapotUpgradeManager<TeapotSpeedUpgrade>(Upgrades);
+    public static UpgradeHelper<TeapotSpeedUpgrade> UpgradeManager = new UpgradeHelper<TeapotSpeedUpgrade>(Upgrades);
 
     private TeapotSpeedUpgrade(int cost, float value) : base(cost, value, "Speed") { }
 }

@@ -1,7 +1,9 @@
 ﻿
-public class TeapotUpgradeManager<T> where T : TeapotUpgrade
+public delegate void UpgradeNotificationHandler<T>(T upgrade);
+
+public class UpgradeHelper<T> where T : Upgrade
 {
-    public TeapotUpgradeManager(T[] upgrades)
+    public UpgradeHelper(T[] upgrades)
     {
         _upgrades = upgrades;
     }

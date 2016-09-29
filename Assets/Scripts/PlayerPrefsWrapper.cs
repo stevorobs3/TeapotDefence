@@ -4,7 +4,7 @@ using System.Collections;
 public static class PlayerPrefsWrapper {
 
     const string TEA_LEAVES_HARVESTED = "TeaLeavesHarvested";
-    const string TEA_PLANTATIONS_BUILT = "TeaPlantationsBuilt";
+    const string PLANTATIONS_BUILT = "PlantationsBuilt";
     const string CAFETIERES_KILLED = "CafetieresKilled";
     const string STEAM_USED = "SteamUsed";
 
@@ -20,15 +20,15 @@ public static class PlayerPrefsWrapper {
         }
     }
 
-    public static int TeaPlantationsBuilt
+    public static int PlantationsBuilt
     {
         get
         {
-            return PlayerPrefs.GetInt(TEA_PLANTATIONS_BUILT);
+            return PlayerPrefs.GetInt(PLANTATIONS_BUILT);
         }
         set
         {
-            PlayerPrefs.SetInt(TEA_PLANTATIONS_BUILT, value);
+            PlayerPrefs.SetInt(PLANTATIONS_BUILT, value);
         }
     }
 

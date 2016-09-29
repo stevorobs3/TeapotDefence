@@ -11,7 +11,7 @@ public class Results : MonoBehaviour {
     void Start () {
         _cafetieresKilled.text = PlayerPrefsWrapper.CafetieresKilled.ToString();
         _teaLeavesHarvested.text = PlayerPrefsWrapper.TeaLeavesHarvested.ToString();
-        _teaPlantationsBuilt.text = PlayerPrefsWrapper.TeaPlantationsBuilt.ToString();
+        _teaPlantationsBuilt.text = PlayerPrefsWrapper.PlantationsBuilt.ToString();
         _steamUsed.text = ((int)PlayerPrefsWrapper.SteamUsed).ToString();
     }
 }

@@ -6,7 +6,7 @@ public class GameController : MonoBehaviour {
 
     private int _cafetieresKilled;
     private int _teaLeavesHarvested;
-    private int _teaPlantationsBuilt;
+    private int _plantationsBuilt;
     private float _steamUsed;
 
     void Start()
@@ -28,9 +28,9 @@ public class GameController : MonoBehaviour {
         _teaLeavesHarvested += amount;
     }
 
-    public void TeaPlantationBuilt(int amount)
+    public void PlantationsBuilt(int amount)
     {
-        _teaPlantationsBuilt += amount;
+        _plantationsBuilt += amount;
     }
 
     public void SteamUsed(float amount)
@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour {
             PlayerPrefsWrapper.CafetieresKilled = _cafetieresKilled;
             PlayerPrefsWrapper.TeaLeavesHarvested = _teaLeavesHarvested;
             PlayerPrefsWrapper.SteamUsed = _steamUsed;
-            PlayerPrefsWrapper.TeaPlantationsBuilt = _teaPlantationsBuilt;
+            PlayerPrefsWrapper.PlantationsBuilt = _plantationsBuilt;
             SceneManager.LoadScene(1);
         }
     }
