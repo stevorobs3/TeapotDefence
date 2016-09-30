@@ -7,7 +7,7 @@ public abstract class UpgradeManager : MonoBehaviour
 
     CurrencyManager _currencyManager;
 
-    protected void Awake()
+    protected void Start()
     {
         _currencyManager = FindObjectOfType<CurrencyManager>();
 
@@ -36,6 +36,7 @@ public abstract class UpgradeManager : MonoBehaviour
             element.Cost.enabled = false;
             element.BuySection.SetActive(false);
             element.Bonus.gameObject.SetActive(false);
+            element.Value.text = upgradeManager.Current.Value.ToString();
         }        
     }
 

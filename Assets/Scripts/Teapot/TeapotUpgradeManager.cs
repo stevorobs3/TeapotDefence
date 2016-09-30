@@ -7,13 +7,13 @@ public class TeapotUpgradeManager : UpgradeManager
     public event TeapotUpgradeNotificationHandler<TeapotSpeedUpgrade> SpeedUpgraded;
 
 
-    new void Awake()
+    new void Start()
     {
         _dpsUpgrade = new UpgradeHelper<TeapotDPSUpgrade>(TeapotDPSUpgrade.Upgrades);
         _rangeUpgrade = new UpgradeHelper<TeapotRangeUpgrade>(TeapotRangeUpgrade.Upgrades);
         _speedUpgrade = new UpgradeHelper<TeapotSpeedUpgrade>(TeapotSpeedUpgrade.Upgrades);
 
-        base.Awake();
+        base.Start();
     }
 
     private UpgradeHelper<TeapotDPSUpgrade> _dpsUpgrade;

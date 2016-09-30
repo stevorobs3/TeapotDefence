@@ -7,12 +7,18 @@ public class Plantation : MonoBehaviour {
 
     public GameObject TeaLeaf;
 
-    const float TIME_BETWEEN_SPAWNS = 2F;
-    const int TEAF_LEAF_VALUE = 1;
-    const float MAX_HEAlTH = 10;
-    const int BONUS = 1;
+    public static int TeaLeafValue = 1;
 
-    float _health = MAX_HEAlTH;
+
+    public static Color TeaLeafColour;
+
+    public static int Bonus = 1;
+
+    public static float MaxHealth;
+    public static float LPS;
+    public static float Regen;
+
+    float _health;
 
     private List<Transform> _spawnPoints = new List<Transform>();
     private Dictionary<Vector3, GameObject> _teaLeaves = new Dictionary<Vector3, GameObject>();
@@ -27,6 +33,7 @@ public class Plantation : MonoBehaviour {
     private float lastTeaLeafSpawn;
     // Use this for initialization
     void Start () {
+        _health = MaxHealth;
         _gameController = FindObjectOfType<GameController>();
         _plantationManager = FindObjectOfType<PlantationManager>();
 
@@ -38,22 +45,35 @@ public class Plantation : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Time.time - lastTeaLeafSpawn > TIME_BETWEEN_SPAWNS)
+        if (Time.time - lastTeaLeafSpawn > 1 / LPS)
         {
             SpawnTeaLeaf();
-        }        	
+        }
+        _health += Time.deltaTime * Regen;
+        _health = Mathf.Min(_health, MaxHealth);
+        ScaleHealthBar();
+
+        foreach (var leaf in _teaLeaves.Values)
+        {
+            leaf.GetComponent<SpriteRenderer>().color = TeaLeafColour;
+        }
 	}
 
     public bool TakeDamage(float amount)
     {
         _health -= amount;
-        var localScale = _healthBar.transform.localScale;
-         localScale.x = (float)_health / MAX_HEAlTH;
-        _healthBar.transform.localScale = localScale;
+        ScaleHealthBar();
         bool died = _health <= -0;
         if (died)
             Die();
         return died; 
+    }
+
+    void ScaleHealthBar()
+    {
+        var localScale = _healthBar.transform.localScale;
+        localScale.x = (float)_health / MaxHealth;
+        _healthBar.transform.localScale = localScale;
     }
 
     private void Die()
@@ -64,8 +84,8 @@ public class Plantation : MonoBehaviour {
 
     public void Harvest()
     {
-        var bonus = _teaLeaves.Count == _spawnPoints.Count ? BONUS : 0;
-        var teaLeavesHarvested = _teaLeaves.Count * TEAF_LEAF_VALUE + bonus;
+        var bonus = _teaLeaves.Count == _spawnPoints.Count ? Bonus : 0;
+        var teaLeavesHarvested = _teaLeaves.Count * TeaLeafValue + bonus;
         _gameController.TeaLeavesHarvested(teaLeavesHarvested);
         _currencyManager.Deposit(teaLeavesHarvested);
         foreach (var teaLeaf in _teaLeaves)
