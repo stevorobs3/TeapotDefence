@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour {
 
 
     private bool gameIsEnding = false;
-    public void EndGame()
+    public void EndGame(bool win)
     {
         if (!gameIsEnding)
         {
@@ -50,6 +50,7 @@ public class GameController : MonoBehaviour {
             PlayerPrefsWrapper.TeaLeavesHarvested = _teaLeavesHarvested;
             PlayerPrefsWrapper.SteamUsed = _steamUsed;
             PlayerPrefsWrapper.PlantationsBuilt = _plantationsBuilt;
+            PlayerPrefsWrapper.Win = win ? 1 : 0;
             SceneManager.LoadScene(1);
         }
     }

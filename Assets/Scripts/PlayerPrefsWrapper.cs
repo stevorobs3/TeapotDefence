@@ -7,6 +7,7 @@ public static class PlayerPrefsWrapper {
     const string PLANTATIONS_BUILT = "PlantationsBuilt";
     const string CAFETIERES_KILLED = "CafetieresKilled";
     const string STEAM_USED = "SteamUsed";
+    const string WIN = "Win";
 
     public static int TeaLeavesHarvested
     {
@@ -29,6 +30,18 @@ public static class PlayerPrefsWrapper {
         set
         {
             PlayerPrefs.SetInt(PLANTATIONS_BUILT, value);
+        }
+    }
+
+    public static int Win
+    {
+        get
+        {
+            return PlayerPrefs.GetInt(WIN);
+        }
+        set
+        {
+            PlayerPrefs.SetInt(WIN, value);
         }
     }
 

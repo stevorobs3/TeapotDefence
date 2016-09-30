@@ -38,7 +38,7 @@ public class CoffeeMaker : MonoBehaviour
         if (targets.Length == 0)
         {
             _target = null;
-            _gameController.EndGame();
+            _gameController.EndGame(win : false);
             return;
         }
         _target = targets.First();
