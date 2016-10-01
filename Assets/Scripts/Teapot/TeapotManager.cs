@@ -13,7 +13,7 @@ public class TeapotManager : MonoBehaviour {
 
     private TeapotUpgradeManager _upgradeManager;
 
-    private Vector3 _spawnLocation = new Vector3(0, 1, 0);
+    private Vector3 _spawnLocation = new Vector3(0, 2, 0);
 
     const float STEAM_UNITS_PER_SECOND = 2F;
 
@@ -75,6 +75,14 @@ public class TeapotManager : MonoBehaviour {
         if (Input.GetKey(KeyCode.D))
             deltaX += _speed * Time.deltaTime;
         Teapot.transform.position += new Vector3(deltaX, deltaY, 0);
+        EnsureWithinGrid();
+
+    }
+
+    void EnsureWithinGrid()
+    {
+        var position = Teapot.transform.position;
+        Teapot.transform.position = CoffeeMakerSpawner.ForceWithinGrid(position);
     }
 
     private void FollowMouse()

@@ -30,15 +30,16 @@ public class UpgradeMenus : MonoBehaviour {
             foreach (var image in images)
             {
                 var color = image.color;
-                if (image.gameObject.name != "Tab" || (int)keyValue.Key != menu) {
-                    color.a = 0.5f;
-                    image.color = color;
-                }
-                else
-                {
-                    color.a = 1f;
-                    image.color = color;
-                }
+                //if (image.gameObject.name != "Tab" || (int)keyValue.Key != menu)
+                //{
+                //    color.a = 0.5f;
+                //    image.color = color;
+                //}
+                //else
+                //{
+                //    color.a = 1f;
+                //    image.color = color;
+                //}
 
                 if ((int)keyValue.Key == menu)
                 {

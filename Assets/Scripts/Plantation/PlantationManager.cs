@@ -16,12 +16,14 @@ public class PlantationManager : MonoBehaviour {
 
     const int TEA_PLANTATION_COST = 10;
 
+    Vector3 _spawnLocation = new Vector3(0, 1, 0);
+
 	// Use this for initialization
 	void Awake () {
         _upgradeManager = FindObjectOfType<PlantationUpgradeManager>();
         _gameController = FindObjectOfType<GameController>();
         _hotbarManager = FindObjectOfType<HotbarManager>();
-        SpawnTeaPlantation(Vector3.zero);
+        SpawnTeaPlantation(_spawnLocation);
         _currencyManager = FindObjectOfType<CurrencyManager>();
 
 
@@ -40,6 +42,8 @@ public class PlantationManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             var spawnLocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (!CoffeeMakerSpawner.WithinGrid(spawnLocation)) return;
+
             spawnLocation.z = 0;
             spawnLocation.y = Mathf.Round(spawnLocation.y);
             spawnLocation.x = Mathf.Round(spawnLocation.x);

@@ -12,8 +12,24 @@ public class CoffeeMakerSpawner : MonoBehaviour {
     private SpawnWave[] _waves;
     private int _nextWaveIndex;
 
-    const float SPAWN_DISTANCE_X = 4.5f;
-    const float SPAWN_DISTANCE_Y = 3.5f;
+    const float SPAWN_DISTANCE_X_MIN = -4.5f;
+    const float SPAWN_DISTANCE_X_MAX = 4.5f;
+    const float SPAWN_DISTANCE_Y_MIN = -3.5f;
+    const float SPAWN_DISTANCE_Y_MAX = 6.5f;
+
+    public static bool WithinGrid(Vector3 spawnLocation)
+    {
+        bool xOK = spawnLocation.x >= SPAWN_DISTANCE_X_MIN && spawnLocation.x <= SPAWN_DISTANCE_X_MAX;
+        bool yOK = spawnLocation.y >= SPAWN_DISTANCE_Y_MIN && spawnLocation.y <= SPAWN_DISTANCE_Y_MAX;
+        return xOK && yOK;
+    }
+
+    public static Vector3 ForceWithinGrid(Vector3 position)
+    {
+        position.x = Mathf.Max(Mathf.Min(position.x, SPAWN_DISTANCE_X_MAX), SPAWN_DISTANCE_X_MIN);
+        position.y = Mathf.Max(Mathf.Min(position.y, SPAWN_DISTANCE_Y_MAX), SPAWN_DISTANCE_Y_MIN);
+        return position;
+    }
 
     System.Random _randomGenerator;
 
@@ -91,17 +107,17 @@ public class CoffeeMakerSpawner : MonoBehaviour {
         if (_randomGenerator.NextBoolean())
         {
             bool isRight = _randomGenerator.NextBoolean();
-            float x = SPAWN_DISTANCE_X * (isRight ? -1 : 1);
+            float x = isRight ? SPAWN_DISTANCE_X_MIN : SPAWN_DISTANCE_X_MAX;
             
-            float y = _randomGenerator.NextFloat(-SPAWN_DISTANCE_Y, SPAWN_DISTANCE_Y);
+            float y = _randomGenerator.NextFloat(SPAWN_DISTANCE_Y_MIN, SPAWN_DISTANCE_Y_MAX);
             return new Vector3(x, y);
         }
         else
         {
             bool isTop = _randomGenerator.NextBoolean();
-            float y = SPAWN_DISTANCE_Y * (isTop ? 1 : -1);
+            float y = isTop ? SPAWN_DISTANCE_Y_MAX : SPAWN_DISTANCE_Y_MIN;
 
-            float x = _randomGenerator.NextFloat(-SPAWN_DISTANCE_X, SPAWN_DISTANCE_X);
+            float x = _randomGenerator.NextFloat(SPAWN_DISTANCE_X_MIN, SPAWN_DISTANCE_X_MAX);
             return new Vector3(x, y);
         }
     }
