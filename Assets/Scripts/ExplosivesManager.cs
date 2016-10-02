@@ -22,7 +22,8 @@ public class ExplosivesManager : MonoBehaviour
             {
                 var spawnLocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 spawnLocation.z = 0;
-                GameObject.Instantiate(_notNiceBiscuitPrefab, spawnLocation, Quaternion.identity);
+                var go = GameObject.Instantiate(_notNiceBiscuitPrefab, spawnLocation, Quaternion.identity) as GameObject;
+                go.transform.SetParent(transform);
             }
         }
     }

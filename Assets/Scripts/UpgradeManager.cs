@@ -9,10 +9,13 @@ public abstract class UpgradeManager : MonoBehaviour
 
     protected void Start()
     {
-        _currencyManager = FindObjectOfType<CurrencyManager>();
+        if (_currencyManager == null)
+        {
+            _currencyManager = FindObjectOfType<CurrencyManager>();
 
-        _stats = GetComponentsInChildren<UpgradeElement>();
-        ConfigureUpgrades();
+            _stats = GetComponentsInChildren<UpgradeElement>();
+            ConfigureUpgrades();
+        }
     }
 
     protected abstract void ConfigureUpgrades();
@@ -20,7 +23,15 @@ public abstract class UpgradeManager : MonoBehaviour
     protected void ConfigureUpgrade<T>(UpgradeElement element, UpgradeHelper<T> upgradeManager, Action<T> successAction) where T : Upgrade
     {
         element.Button.onClick.RemoveAllListeners();
-        if (upgradeManager.Next != null)
+
+        bool hasNextUpgrade = upgradeManager.Next != null;
+
+        element.Button.enabled = hasNextUpgrade;
+        element.Cost.enabled = hasNextUpgrade;
+        element.BuySection.SetActive(hasNextUpgrade);
+        element.Bonus.gameObject.SetActive(hasNextUpgrade);
+
+        if (hasNextUpgrade)
         {
             element.Button.onClick.AddListener(() => UpgradeStat(upgradeManager, successAction));
             element.Title.text = upgradeManager.Next.Title;
@@ -32,10 +43,6 @@ public abstract class UpgradeManager : MonoBehaviour
         }
         else
         {
-            element.Button.enabled = false;
-            element.Cost.enabled = false;
-            element.BuySection.SetActive(false);
-            element.Bonus.gameObject.SetActive(false);
             element.Value.text = upgradeManager.Current.Value.ToString();
         }        
     }

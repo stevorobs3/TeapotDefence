@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class PlantationManager : MonoBehaviour {
@@ -13,17 +12,18 @@ public class PlantationManager : MonoBehaviour {
     private HotbarManager _hotbarManager;
     private PlantationUpgradeManager _upgradeManager;
 
-
     const int TEA_PLANTATION_COST = 10;
 
     Vector3 _spawnLocation = new Vector3(0, 1, 0);
 
-	// Use this for initialization
-	void Awake () {
+    Plantation _selectedPlantation;
+
+    // Use this for initialization
+    void Awake () {
         _upgradeManager = FindObjectOfType<PlantationUpgradeManager>();
         _gameController = FindObjectOfType<GameController>();
         _hotbarManager = FindObjectOfType<HotbarManager>();
-        SpawnTeaPlantation(_spawnLocation);
+        SpawnPlantation(_spawnLocation);
         _currencyManager = FindObjectOfType<CurrencyManager>();
 
 
@@ -31,8 +31,8 @@ public class PlantationManager : MonoBehaviour {
         _upgradeManager.LPSUpgraded += UpgradeLPS;
         _upgradeManager.RegenUpgraded += UpgradeRegen;
         _upgradeManager.LeavesUpgraded += (upgrade) => {
-            Plantation.TeaLeafValue = (int)upgrade.Value;
-            Plantation.TeaLeafColour = upgrade.Colour;
+            _selectedPlantation.TeaLeafValue = (int)upgrade.Value;
+            _selectedPlantation.TeaLeafColour = upgrade.Colour;
         };
 
     }
@@ -50,11 +50,10 @@ public class PlantationManager : MonoBehaviour {
             
             if (_teaPlantations.ContainsKey(spawnLocation))
             {
-                Debug.Log("Harvesting!");
-                _teaPlantations[spawnLocation].Harvest();
+                SelectPlantation(_teaPlantations[spawnLocation]);
             }
             else if (_hotbarManager.CurrentlySelectedItem() == SelectedItem.TeaPlantation && _currencyManager.Spend(TEA_PLANTATION_COST)) {
-                SpawnTeaPlantation(spawnLocation);
+                SpawnPlantation(spawnLocation);
             }
         }
 	}
@@ -66,24 +65,35 @@ public class PlantationManager : MonoBehaviour {
 
     void UpgradeHealth(PlantationHealthUpgrade upgrade)
     {
-        Plantation.MaxHealth = upgrade.Value;
+        _selectedPlantation.MaxHealth = upgrade.Value;
     }
 
     void UpgradeRegen(PlantationRegenUpgrade upgrade)
     {
-        Plantation.Regen = upgrade.Value;
+        _selectedPlantation.Regen = upgrade.Value;
     }
 
     void UpgradeLPS(PlantationLPSUpgrade upgrade)
     {
-        Plantation.LPS = upgrade.Value;
+        _selectedPlantation.LPS = upgrade.Value;
     }
 
-    private void SpawnTeaPlantation(Vector3 position)
+    void SelectPlantation(Plantation plantation)
+    {
+        if (_selectedPlantation != null)
+            _selectedPlantation.UnSelect();
+        _selectedPlantation = plantation;
+        plantation.Select();
+        _upgradeManager.SelectPlantation(plantation);   
+    }
+
+    private void SpawnPlantation(Vector3 position)
     {
         _gameController.PlantationsBuilt(1);
-        var teaPlantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<Plantation>();
-        teaPlantation.transform.SetParent(transform);
-        _teaPlantations.Add(position, teaPlantation);
+        var plantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<Plantation>();
+        plantation.transform.SetParent(transform);
+        _upgradeManager.AddPlantation(plantation);
+        SelectPlantation(plantation);
+        _teaPlantations.Add(position, plantation);
     }
 }

@@ -127,6 +127,7 @@ GameObject:
   - 4: {fileID: 4000011906484722}
   - 212: {fileID: 212000013194297824}
   - 114: {fileID: 114000013720968156}
+  - 95: {fileID: 95000012210062502}
   m_Layer: 0
   m_Name: TeaPlantation
   m_TagString: TeaPlantation
@@ -332,6 +333,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4000011906484722}
   m_RootOrder: 0
+--- !u!95 &95000012210062502
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012394496498}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd5da884ec2f67a4dbbe76aa408fbdb1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114000013720968156
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -344,6 +362,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TeaLeaf: {fileID: 1000011378420066, guid: 33d937051909c4644a486e5946224b87, type: 2}
+  TeaLeafValue: 2
+  TeaLeafColour: {r: 1, g: 1, b: 1, a: 1}
+  MaxHealth: 10
+  LPS: 1
+  Regen: 0
 --- !u!212 &212000011934910714
 SpriteRenderer:
   m_ObjectHideFlags: 1

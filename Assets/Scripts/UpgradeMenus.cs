@@ -9,8 +9,8 @@ public class UpgradeMenus : MonoBehaviour {
     public GameObject _plantationUpgradeMenu;
 
     private Dictionary<UpgradeMenuType, GameObject> _menus;
-
-    void Start()
+    private HotbarManager _hotbarManager;
+    void Awake()
     {
         _menus = new Dictionary<UpgradeMenuType, GameObject>()
         {
@@ -18,12 +18,22 @@ public class UpgradeMenus : MonoBehaviour {
             {UpgradeMenuType.Plantation, _plantationUpgradeMenu }
         };
         SelectMenuOption(0);
+
+        _hotbarManager = FindObjectOfType<HotbarManager>();
+        _hotbarManager.ItemSelected += (item) => {
+            if (item == SelectedItem.Steam)
+                SelectMenuOption((int)UpgradeMenuType.Teapot);
+            else if (item == SelectedItem.TeaPlantation)
+                SelectMenuOption((int)UpgradeMenuType.Plantation);
+        };
     }
 
     public enum UpgradeMenuType { Teapot, Plantation};
 
     public void SelectMenuOption(int menu)
     {
+        if (_menus == null)
+            Awake();
         foreach (var keyValue in _menus)
         {
             var images = keyValue.Value.GetComponentsInChildren<Image>();

@@ -64,7 +64,7 @@ public class HotbarManager : MonoBehaviour
         _selectedSlot.enabled = true;
         _selectedItem = (SelectedItem)index;
 
-        if (index == 2 && ItemSelected != null)
-            ItemSelected(SelectedItem.NotNiceBiscuit);
+        if (ItemSelected != null)
+            ItemSelected((SelectedItem)index);
     }
 }

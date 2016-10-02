@@ -1,22 +1,31 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Plantation : MonoBehaviour {
 
 
     public GameObject TeaLeaf;
 
-    public static int TeaLeafValue = 1;
 
+    public void Select()
+    {
+        _animator.SetBool("Selected", true);
 
-    public static Color TeaLeafColour;
+    }
+    
+    public void UnSelect()
+    {
+        _animator.SetBool("Selected", false);
+    }
 
-    public static int Bonus = 1;
+    static int Bonus = 1;
 
-    public static float MaxHealth;
-    public static float LPS;
-    public static float Regen;
+    public int TeaLeafValue = (int)PlantationLeavesUpgrade.Level0.Value;
+    public Color TeaLeafColour = PlantationLeavesUpgrade.Level0.Colour;
+    public float MaxHealth = PlantationHealthUpgrade.Level0.Value;
+    public float LPS = PlantationLPSUpgrade.Level0.Value;
+    public float Regen = PlantationRegenUpgrade.Level0.Value;
 
     float _health;
 
@@ -31,7 +40,14 @@ public class Plantation : MonoBehaviour {
 
 
     private float lastTeaLeafSpawn;
-    // Use this for initialization
+
+    private Animator _animator;
+
+    void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
     void Start () {
         _health = MaxHealth;
         _gameController = FindObjectOfType<GameController>();
