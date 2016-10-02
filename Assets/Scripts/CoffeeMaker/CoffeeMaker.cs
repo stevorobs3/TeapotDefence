@@ -9,7 +9,10 @@ public class CoffeeMaker : MonoBehaviour
 
     private GameController _gameController;
 
-    
+
+    public delegate void DiedHandler();
+    public event DiedHandler Died;
+
     private float _health;
 
     public float speed = 0.5f;
@@ -102,5 +105,7 @@ public class CoffeeMaker : MonoBehaviour
     {
         _gameController.CafetieresKilled(1);
         Destroy(gameObject);
+        if (Died != null)
+            Died();
     }
 }

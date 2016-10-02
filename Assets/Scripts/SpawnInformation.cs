@@ -6,7 +6,8 @@ using System.Collections.Generic;
 public class SpawnInformation : MonoBehaviour {
 
     public GridLayoutGroup _entityGrid;
-    public Text _text;
+    public Text _timerText;
+    public Text _labelText;
 
 
     public Sprite _cafetiere;
@@ -41,15 +42,16 @@ public class SpawnInformation : MonoBehaviour {
         _timeTilSpawn -= Time.deltaTime;
         if (_timeTilSpawn > 0)
         {            
-            _text.text = _timeTilSpawn.ToString("F2");
+            _timerText.text = _timeTilSpawn.ToString("F2");
         }
-        else if (_numSpawns < _wave.NumCafetieres + _wave.NumItalianStoves) {
+        else if (_numSpawns < _wave.Count - 1) {
+            _labelText.text = "Next Spawn in: ";
             _timeTilSpawn = _wave.TimeBetweenSpawns;
-            _text.text = _timeTilSpawn.ToString("F2");
+            _timerText.text = _timeTilSpawn.ToString("F2");
         }
         else
         {
-            _text.text = "";
+            _timerText.text = "";
         }
     }
 
@@ -58,11 +60,12 @@ public class SpawnInformation : MonoBehaviour {
 
     public void SetNextSpawn(SpawnWave wave)
     {
+        _labelText.text = "Next Wave in: ";
         _numSpawns = 0;
         _wave = wave;
-        _timeTilSpawn = wave.TimeBeforeFirstSpawn;
+        _timeTilSpawn = wave.TimeBeforeFirstSpawn + wave.TimeBetweenSpawns;
         ClearEntityBoxes();
-        ResizeEntityBoxes(wave.NumCafetieres + wave.NumItalianStoves);
+        ResizeEntityBoxes(wave.Count);
         int index = 0;
         for (int i = 0; i < wave.NumCafetieres; i++)
         {

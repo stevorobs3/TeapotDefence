@@ -33,4 +33,12 @@ public class SpawnWave
     public readonly float TimeBetweenSpawns;
     public readonly float TimeBeforeFirstSpawn;
 
+    public int Count
+    {
+        get
+        {
+            return NumCafetieres + NumItalianStoves;
+        }
+    }
+
 }

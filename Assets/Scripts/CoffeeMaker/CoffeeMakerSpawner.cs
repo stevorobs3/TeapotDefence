@@ -10,7 +10,12 @@ public class CoffeeMakerSpawner : MonoBehaviour {
     private Dictionary<CoffeeMakerType, GameObject> _coffeeMakerPrefabs;
 
     private SpawnWave[] _waves;
+
+    private SpawnWave _currentWave;
+    private int _coffeeMakersAlive = 0;
     private int _nextWaveIndex;
+
+
 
     const float SPAWN_DISTANCE_X_MIN = -4.5f;
     const float SPAWN_DISTANCE_X_MAX = 4.5f;
@@ -62,6 +67,7 @@ public class CoffeeMakerSpawner : MonoBehaviour {
         Vector3 spawnPoint = RandomSpawnPoint();
         var coffeeMaker = Instantiate(coffeeMakerPrefab, spawnPoint, Quaternion.identity) as GameObject;
         coffeeMaker.transform.SetParent(transform);
+        coffeeMaker.GetComponent<CoffeeMaker>().Died += () => _coffeeMakersAlive--;
         _spawnInformation.EntitySpawned();
     }
 
@@ -83,7 +89,15 @@ public class CoffeeMakerSpawner : MonoBehaviour {
 
     private IEnumerator SpawnNextWave(SpawnWave wave)
     {
+        _currentWave = wave;
+        
+        // wait until all coffeemakere are dead
+        while (_coffeeMakersAlive != 0)
+            yield return null;
+
         _spawnInformation.SetNextSpawn(wave);
+        _coffeeMakersAlive = wave.Count;
+
 
         yield return new WaitForSeconds(wave.TimeBeforeFirstSpawn);
         
