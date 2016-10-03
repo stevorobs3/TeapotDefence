@@ -76,8 +76,9 @@ public class CoffeeMakerSpawner : MonoBehaviour {
         _nextWaveIndex++;
         if (_nextWaveIndex >= _waves.Length - 1)
         {
+            while (_coffeeMakersAlive != 0)
+                yield return null;
             _gameController.EndGame(win: true);
-            yield return null;
         }
         else
         {
@@ -90,15 +91,9 @@ public class CoffeeMakerSpawner : MonoBehaviour {
     private IEnumerator SpawnNextWave(SpawnWave wave)
     {
         _currentWave = wave;
-        
-        // wait until all coffeemakere are dead
-        while (_coffeeMakersAlive != 0)
-            yield return null;
-
         _spawnInformation.SetNextSpawn(wave);
-        _coffeeMakersAlive = wave.Count;
-
-
+        _coffeeMakersAlive += wave.Count;
+        
         yield return new WaitForSeconds(wave.TimeBeforeFirstSpawn);
         
         yield return SpawnCoffeeMakers(CoffeeMakerType.Cafetiere, wave.NumCafetieres, wave.TimeBetweenSpawns);
