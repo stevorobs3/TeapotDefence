@@ -1,71 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
 using UnityEngine;
 
-public class Steam: MonoBehaviour
+public class Steam : MonoBehaviour
 {
-    public List<CoffeeMaker> _currentTargets = new List<CoffeeMaker>();
+    private float _speed = 5f;
 
-    public float _dps = 5;
-    
-    TeapotUpgradeManager _teapotUpgradeManager;
-
-    ParticleSystem _particles;
-
-    void Awake()
-    {
-        _teapotUpgradeManager = FindObjectOfType<TeapotUpgradeManager>();
-        _teapotUpgradeManager.RangeUpgraded += UpgradeSteamRange;
-        _teapotUpgradeManager.DPSUpgraded += UpgradeSteamAttack;
-
-        _particles = transform.parent.gameObject.GetComponent<ParticleSystem>();
-    }
-
-    private void UpgradeSteamAttack(TeapotDPSUpgrade dpsUpgrade)
-    {
-        _particles.startColor =  dpsUpgrade.Colour;
-        _dps = dpsUpgrade.Value;
-    }
-
-    private void UpgradeSteamRange(TeapotRangeUpgrade rangeUpgrade)
-    {
-        _particles.startLifetime = rangeUpgrade.StartLifetime;
-        var localScale = transform.localScale;
-        localScale.x = rangeUpgrade.XCollider;
-        localScale.y = rangeUpgrade.YCollider;
-        transform.localScale = localScale;
-    }
+    public delegate void HitEnemyHandler(CoffeeMaker coffeemaker);
+    public event HitEnemyHandler HitEnemy;
 
     void Update()
     {
-        var elementsToRemove = new List<CoffeeMaker>();
-        foreach (var coffeeMaker in _currentTargets)
-        {
-            if (coffeeMaker == null || coffeeMaker.TakeDamage(_dps * Time.deltaTime))
-                elementsToRemove.Add(coffeeMaker);
-        }
-        foreach (var element in elementsToRemove)
-            _currentTargets.Remove(element);
+        Move();
+    }
+    
+
+    void Move()
+    {
+        transform.Translate(new Vector3(1,0,0) * Time.deltaTime * _speed, Space.Self);
     }
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        var coffeeMaker = collider.GetComponent<CoffeeMaker>();
-        if (!_currentTargets.Contains(coffeeMaker))
+        CoffeeMaker coffeeMaker = collider.GetComponent<CoffeeMaker>();
+        if (coffeeMaker != null)
         {
-            _currentTargets.Add(coffeeMaker);
+            Explode(coffeeMaker);
         }
     }
 
-    void OnTriggerExit2D(Collider2D collider)
+    void Explode(CoffeeMaker coffeemaker)
     {
-        var coffeeMaker = collider.GetComponent<CoffeeMaker>();
-        if (_currentTargets.Contains(coffeeMaker))
-        {
-            _currentTargets.Remove(coffeeMaker);
-        }
+        // TODO: play die animation  & sound
+        if (HitEnemy != null)
+            HitEnemy(coffeemaker);
+        Destroy(gameObject);
     }
 }
-

@@ -4,63 +4,71 @@ using System.Collections;
 public class TeapotManager : MonoBehaviour {
 
     public GameObject _teapotPrefab;
+    public Steam _steamPrefab;
+    
+    private float _speed = 1.5f;
+    private float _lastAttackTime;
+    private int _ammoRemaining;
 
 
-    private ParticleSystem _teapotSteam;
-    private GameController _gameController;
 
-    private HotbarManager _hotbarManager;
-
-    private TeapotUpgradeManager _upgradeManager;
 
     private Vector3 _spawnLocation = new Vector3(0, 2, 0);
+    private Teapot _teapot;
 
-    const float STEAM_UNITS_PER_SECOND = 2F;
+    private GameController _gameController;
+    private HotbarManager _hotbarManager;
+    private SteamUpgradeManager _steamUpgradeManager;
+   
 
-    public GameObject Teapot;
     void Awake()
     {
-        _upgradeManager = FindObjectOfType<TeapotUpgradeManager>();
+        _steamUpgradeManager = FindObjectOfType<SteamUpgradeManager>();
         _gameController = FindObjectOfType<GameController>();
         _hotbarManager = FindObjectOfType<HotbarManager>();
-        Teapot = Instantiate(_teapotPrefab, _spawnLocation, Quaternion.identity) as GameObject;
-        Teapot.transform.SetParent(gameObject.transform);
-        _teapotSteam = Teapot.GetComponentInChildren<ParticleSystem>();
-        _teapotSteam.gameObject.SetActive(false);
+        _teapot = (Instantiate(_teapotPrefab, _spawnLocation, Quaternion.identity)as GameObject).GetComponent<Teapot>();
+        _teapot.transform.SetParent(gameObject.transform);
 
-        _upgradeManager.SpeedUpgraded += UpgradeSpeed;
-    }
-
-    void UpgradeSpeed(TeapotSpeedUpgrade speedUpgrade)
-    {
-        _speed = speedUpgrade.Value;
+        _lastAttackTime = Time.deltaTime - _steamUpgradeManager.ReloadTimeUpgradeManager.Current.Value;
+        _ammoRemaining = (int)_steamUpgradeManager.ClipSizeUpgradeManager.Current.Value;
     }
 
     void Update ()
     {
-        FollowMouse();
+        var go = _teapot.gameObject;
+        FollowMouse(ref go);
         Move();
         FireAttackSteam();
     }
 
-    private float _speed = 1.5f;
-
     private void FireAttackSteam()
     {
-        if (Input.GetMouseButton(0) && _hotbarManager.CurrentlySelectedItem() == SelectedItem.Steam)
+        if (Input.GetMouseButtonDown(0) && _ammoRemaining > 0)
         {
-            _gameController.SteamUsed(STEAM_UNITS_PER_SECOND * Time.deltaTime);
-            if (!_teapotSteam.isPlaying)
+            _ammoRemaining--;
+            if (_ammoRemaining <= 0)
             {
-                _teapotSteam.gameObject.SetActive(true);
-                _teapotSteam.Play();
+                StartCoroutine(ReloadAmmo());
             }
+
+            Steam steam = GameObject.Instantiate(_steamPrefab) as Steam;
+            steam.transform.position = _teapot.Nose.transform.position;
+            var go = steam.gameObject;
+            FollowMouse(ref go);
+            go.transform.Rotate(new Vector3(0, 180, 0));
+            steam.HitEnemy += (enemy) => AttackEnemy(enemy, _steamUpgradeManager.DamageUpgradeManager.Current.Value);
         }
-        else
-        {
-            _teapotSteam.gameObject.SetActive(false);
-            _teapotSteam.Stop();
-        }
+    }
+
+    private IEnumerator ReloadAmmo()
+    {
+        yield return new WaitForSeconds(_steamUpgradeManager.ReloadTimeUpgradeManager.Current.Value);
+        _ammoRemaining = (int)_steamUpgradeManager.ClipSizeUpgradeManager.Current.Value;
+    }
+
+    private void AttackEnemy(CoffeeMaker coffeemaker, float attackDamage)
+    {
+        coffeemaker.TakeDamage(attackDamage);
     }
 
     private void Move()
@@ -74,29 +82,21 @@ public class TeapotManager : MonoBehaviour {
             deltaX -= _speed * Time.deltaTime;
         if (Input.GetKey(KeyCode.D))
             deltaX += _speed * Time.deltaTime;
-        Teapot.transform.position += new Vector3(deltaX, deltaY, 0);
+        _teapot.transform.position += new Vector3(deltaX, deltaY, 0);
         EnsureWithinGrid();
 
     }
 
     void EnsureWithinGrid()
     {
-        var position = Teapot.transform.position;
-        Teapot.transform.position = CoffeeMakerSpawner.ForceWithinGrid(position);
+        var position = _teapot.transform.position;
+        _teapot.transform.position = CoffeeMakerSpawner.ForceWithinGrid(position);
     }
 
-    private void FollowMouse()
+    private void FollowMouse(ref GameObject go)
     {
         var cameraPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cameraPosition.z = 0;
-
-        TransformHelper.LookAtTarget(cameraPosition, ref Teapot);
-        var yScale = (cameraPosition.x > Teapot.transform.position.x) ? 1 : -1;
-        var localScale = _teapotSteam.gameObject.transform.GetChild(0).localScale;
-        if (yScale * localScale.y < 0)
-        {
-            localScale.y *= -1;
-            _teapotSteam.gameObject.transform.GetChild(0).localScale = localScale;
-        }
+        TransformHelper.LookAtTarget(cameraPosition, ref go);
     }
 }
