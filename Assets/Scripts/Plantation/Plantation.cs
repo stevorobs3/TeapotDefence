@@ -46,9 +46,6 @@ public class Plantation : MonoBehaviour {
     void Awake()
     {
         _animator = GetComponent<Animator>();
-    }
-
-    void Start () {
         _health = MaxHealth;
         _gameController = FindObjectOfType<GameController>();
         _plantationManager = FindObjectOfType<PlantationManager>();
