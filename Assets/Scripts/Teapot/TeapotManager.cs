@@ -9,9 +9,9 @@ public class TeapotManager : MonoBehaviour {
     private float _speed = 1.5f;
     private float _lastAttackTime;
     private int _ammoRemaining;
+    private bool _reloading;
 
-
-
+    private WeaponView _steamWeaponView;
 
     private Vector3 _spawnLocation = new Vector3(0, 2, 0);
     private Teapot _teapot;
@@ -26,11 +26,17 @@ public class TeapotManager : MonoBehaviour {
         _steamUpgradeManager = FindObjectOfType<SteamUpgradeManager>();
         _gameController = FindObjectOfType<GameController>();
         _hotbarManager = FindObjectOfType<HotbarManager>();
+        _steamWeaponView = FindObjectOfType<WeaponView>();
         _teapot = (Instantiate(_teapotPrefab, _spawnLocation, Quaternion.identity)as GameObject).GetComponent<Teapot>();
         _teapot.transform.SetParent(gameObject.transform);
 
-        _lastAttackTime = Time.deltaTime - _steamUpgradeManager.ReloadTimeUpgradeManager.Current.Value;
-        _ammoRemaining = (int)_steamUpgradeManager.ClipSizeUpgradeManager.Current.Value;
+        float currentReloadTime = _steamUpgradeManager.ReloadTime.Current.Value;
+        _lastAttackTime = Time.deltaTime - currentReloadTime;
+        _ammoRemaining = (int)_steamUpgradeManager.ClipSize.Current.Value;
+
+        _steamWeaponView.SetClipSize(_ammoRemaining);
+
+        _steamUpgradeManager.ClipSizeUpgraded += (clipSize) => _steamWeaponView.SetClipSize((int)clipSize.Value);
     }
 
     void Update ()
@@ -39,13 +45,23 @@ public class TeapotManager : MonoBehaviour {
         FollowMouse(ref go);
         Move();
         FireAttackSteam();
+        LookForReload();
+    }
+
+    void LookForReload()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && _ammoRemaining < (int)_steamUpgradeManager.ClipSize.Current.Value && !_reloading)
+        {
+            StartCoroutine(ReloadAmmo());
+        }
     }
 
     private void FireAttackSteam()
     {
-        if (Input.GetMouseButtonDown(0) && _ammoRemaining > 0)
+        if (Input.GetMouseButtonDown(0) && _ammoRemaining > 0 && !_reloading)
         {
             _ammoRemaining--;
+            _steamWeaponView.UseBullet();
             if (_ammoRemaining <= 0)
             {
                 StartCoroutine(ReloadAmmo());
@@ -56,14 +72,18 @@ public class TeapotManager : MonoBehaviour {
             var go = steam.gameObject;
             FollowMouse(ref go);
             go.transform.Rotate(new Vector3(0, 180, 0));
-            steam.HitEnemy += (enemy) => AttackEnemy(enemy, _steamUpgradeManager.DamageUpgradeManager.Current.Value);
+            steam.HitEnemy += (enemy) => AttackEnemy(enemy, _steamUpgradeManager.Damage.Current.Value);
         }
     }
 
     private IEnumerator ReloadAmmo()
     {
-        yield return new WaitForSeconds(_steamUpgradeManager.ReloadTimeUpgradeManager.Current.Value);
-        _ammoRemaining = (int)_steamUpgradeManager.ClipSizeUpgradeManager.Current.Value;
+        _reloading = true;
+        float reloadTime = _steamUpgradeManager.ReloadTime.Current.Value;
+        _steamWeaponView.Reload(reloadTime);
+        yield return new WaitForSeconds(reloadTime);
+        _ammoRemaining = (int)_steamUpgradeManager.ClipSize.Current.Value;
+        _reloading = false;
     }
 
     private void AttackEnemy(CoffeeMaker coffeemaker, float attackDamage)

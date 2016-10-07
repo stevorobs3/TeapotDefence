@@ -10,15 +10,15 @@ public abstract class WeaponUpgradeManager<DamageUpgrade, ReloadTimeUpgrade, Cli
     public event SteamUpgradeNotificationHandler<ReloadTimeUpgrade> ReloadTimeUpgraded;
     public event SteamUpgradeNotificationHandler<ClipSizeUpgrade> ClipSizeUpgraded;
 
-    public abstract UpgradeHelper<DamageUpgrade> DamageUpgradeManager { get; }
-    public abstract UpgradeHelper<ReloadTimeUpgrade> ReloadTimeUpgradeManager { get; }
-    public abstract UpgradeHelper<ClipSizeUpgrade> ClipSizeUpgradeManager { get; }
+    public abstract UpgradeHelper<DamageUpgrade> Damage { get; }
+    public abstract UpgradeHelper<ReloadTimeUpgrade> ReloadTime { get; }
+    public abstract UpgradeHelper<ClipSizeUpgrade> ClipSize { get; }
     
 
     protected override void ConfigureUpgrades()
     {
-        ConfigureUpgrade(_stats[0], DamageUpgradeManager, (upgrade) => { if (DamageUpgraded != null) DamageUpgraded(upgrade); });
-        ConfigureUpgrade(_stats[1], ReloadTimeUpgradeManager, (upgrade) => { if (ReloadTimeUpgraded != null) ReloadTimeUpgraded(upgrade); });
-        ConfigureUpgrade(_stats[2], ClipSizeUpgradeManager, (upgrade) => { if (ClipSizeUpgraded != null) ClipSizeUpgraded(upgrade); });
+        ConfigureUpgrade(_stats[0], Damage, (upgrade) => { if (DamageUpgraded != null) DamageUpgraded(upgrade); });
+        ConfigureUpgrade(_stats[1], ReloadTime, (upgrade) => { if (ReloadTimeUpgraded != null) ReloadTimeUpgraded(upgrade); });
+        ConfigureUpgrade(_stats[2], ClipSize, (upgrade) => { if (ClipSizeUpgraded != null) ClipSizeUpgraded(upgrade); });
     }
 }
