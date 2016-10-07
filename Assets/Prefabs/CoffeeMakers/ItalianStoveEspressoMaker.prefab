@@ -11,6 +11,25 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1000011510360944}
   m_IsPrefabParent: 1
+--- !u!1 &1000010489595718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000011942311374}
+  - 212: {fileID: 212000012528474066}
+  - 61: {fileID: 61000012244029324}
+  - 50: {fileID: 50000013801936454}
+  - 95: {fileID: 95000011519581922}
+  m_Layer: 0
+  m_Name: Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1000011510360944
 GameObject:
   m_ObjectHideFlags: 0
@@ -19,10 +38,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000011789807728}
-  - 212: {fileID: 212000014138359872}
   - 114: {fileID: 114000013429819404}
-  - 61: {fileID: 61000012812595904}
-  - 50: {fileID: 50000010134100586}
   m_Layer: 0
   m_Name: ItalianStoveEspressoMaker
   m_TagString: Untagged
@@ -58,7 +74,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000011789807728}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &4000011789807728
 Transform:
   m_ObjectHideFlags: 1
@@ -70,16 +86,30 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 4000011942311374}
   - {fileID: 4000010034466834}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &50000010134100586
+--- !u!4 &4000011942311374
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010489595718}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000011789807728}
+  m_RootOrder: 0
+--- !u!50 &50000013801936454
 Rigidbody2D:
   serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011510360944}
+  m_GameObject: {fileID: 1000010489595718}
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -90,12 +120,12 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61000012812595904
+--- !u!61 &61000012244029324
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011510360944}
+  m_GameObject: {fileID: 1000010489595718}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -104,6 +134,23 @@ BoxCollider2D:
   m_Offset: {x: 0.0067089796, y: -0.052108556}
   serializedVersion: 2
   m_Size: {x: 0.40571356, y: 0.52067906}
+--- !u!95 &95000011519581922
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010489595718}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d6a6b6495ff189940b13fc648e4f5e2b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114000013429819404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,12 +198,12 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!212 &212000014138359872
+--- !u!212 &212000012528474066
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011510360944}
+  m_GameObject: {fileID: 1000010489595718}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

@@ -21,7 +21,7 @@ public class Steam : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        CoffeeMaker coffeeMaker = collider.GetComponent<CoffeeMaker>();
+        CoffeeMaker coffeeMaker = collider.transform.parent.GetComponent<CoffeeMaker>();
         if (coffeeMaker != null)
         {
             Explode(coffeeMaker);

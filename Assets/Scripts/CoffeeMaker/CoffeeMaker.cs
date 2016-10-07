@@ -6,9 +6,9 @@ public class CoffeeMaker : MonoBehaviour
     private Plantation _target;
 
     private SpriteRenderer _healthBar;
+    private Animator _animator;
 
     private GameController _gameController;
-
 
     public delegate void DiedHandler();
     public event DiedHandler Died;
@@ -24,6 +24,7 @@ public class CoffeeMaker : MonoBehaviour
 
         _health = _maxHealth;
         _gameController = FindObjectOfType<GameController>();
+        _animator = GetComponentInChildren<Animator>();
         ChooseTarget();
         foreach (Transform child in transform)
         {
@@ -88,6 +89,7 @@ public class CoffeeMaker : MonoBehaviour
 
     public bool TakeDamage(float amount)
     {
+        _animator.SetTrigger("Hit");
         _health -= amount;
         var localScale = _healthBar.transform.localScale;
         localScale.x = (float)_health / _maxHealth;
