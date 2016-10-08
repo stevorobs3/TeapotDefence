@@ -14,7 +14,7 @@ public class PlantationManager : MonoBehaviour {
 
     const int TEA_PLANTATION_COST = 10;
 
-    Vector3 _spawnLocation = new Vector3(0, 1, 0);
+    Vector3 _spawnLocation = new Vector3(2, 1, 0);
 
     Plantation _selectedPlantation;
 

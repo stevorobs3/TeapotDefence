@@ -14,7 +14,7 @@ public class TeapotManager : MonoBehaviour {
 
     private WeaponView _steamWeaponView;
 
-    private Vector3 _spawnLocation = new Vector3(0, 2, 0);
+    private Vector3 _spawnLocation = new Vector3(2, 2, 0);
     private Teapot _teapot;
 
     private GameController _gameController;
