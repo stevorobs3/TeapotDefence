@@ -18,9 +18,9 @@ public class CoffeeMakerSpawner : MonoBehaviour {
 
 
 
-    const float SPAWN_DISTANCE_X_MIN = -4.5f;
-    const float SPAWN_DISTANCE_X_MAX = 4.5f;
-    const float SPAWN_DISTANCE_Y_MIN = -3.5f;
+    const float SPAWN_DISTANCE_X_MIN = -5.5f;
+    const float SPAWN_DISTANCE_X_MAX = 8.5f;
+    const float SPAWN_DISTANCE_Y_MIN = -4.5f;
     const float SPAWN_DISTANCE_Y_MAX = 6.5f;
 
     public static bool WithinGrid(Vector3 spawnLocation)
