@@ -5,7 +5,8 @@ public class TeapotManager : MonoBehaviour {
 
     public GameObject _teapotPrefab;
     public Steam _steamPrefab;
-    
+    public SteamUpgradeManager _steamUpgradeManager;
+
     private float _speed = 1.5f;
     private float _lastAttackTime;
     private int _ammoRemaining;
@@ -18,8 +19,8 @@ public class TeapotManager : MonoBehaviour {
 
     private GameController _gameController;
     private HotbarManager _hotbarManager;
-    private SteamUpgradeManager _steamUpgradeManager;
-   
+
+    private bool _shopIsVisible = false;
 
     void Awake()
     {
@@ -30,13 +31,17 @@ public class TeapotManager : MonoBehaviour {
         _teapot = (Instantiate(_teapotPrefab, _spawnLocation, Quaternion.identity)as GameObject).GetComponent<Teapot>();
         _teapot.transform.SetParent(gameObject.transform);
 
-        float currentReloadTime = _steamUpgradeManager.ReloadTime.Current.Value;
-        _lastAttackTime = Time.deltaTime - currentReloadTime;
-        _ammoRemaining = (int)_steamUpgradeManager.ClipSize.Current.Value;
 
-        _steamWeaponView.SetClipSize(_ammoRemaining);
+        _steamUpgradeManager.Initialized += () =>
+        {
+            float currentReloadTime = _steamUpgradeManager.ReloadTime.Current.Value;
+            _lastAttackTime = Time.deltaTime - currentReloadTime;
+            _ammoRemaining = (int)_steamUpgradeManager.ClipSize.Current.Value;
 
-        _steamUpgradeManager.ClipSizeUpgraded += (clipSize) => _steamWeaponView.SetClipSize((int)clipSize.Value);
+            _steamWeaponView.SetClipSize(_ammoRemaining);
+
+            _steamUpgradeManager.ClipSizeUpgraded += (clipSize) => _steamWeaponView.SetClipSize((int)clipSize.Value);
+        };
     }
 
     void Update ()
@@ -56,9 +61,19 @@ public class TeapotManager : MonoBehaviour {
         }
     }
 
+    public void ShowShop()
+    {
+        _shopIsVisible = true;
+    }
+
+    public void HideShop()
+    {
+        _shopIsVisible = false;
+    }
+
     private void FireAttackSteam()
     {
-        if (Input.GetMouseButtonDown(0) && _ammoRemaining > 0 && !_reloading)
+        if (Input.GetMouseButtonDown(0) && _ammoRemaining > 0 && !_reloading && !_shopIsVisible)
         {
             _ammoRemaining--;
             _steamWeaponView.UseBullet();

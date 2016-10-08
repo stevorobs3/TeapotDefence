@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CoffeeMakerSpawner : MonoBehaviour {
 
@@ -38,21 +39,26 @@ public class CoffeeMakerSpawner : MonoBehaviour {
 
     System.Random _randomGenerator;
 
-    private SpawnInformation _spawnInformation;
     private GameController _gameController;
+    private TeapotManager _teapotManager;
 
+    GameObject _shop;
     // Use this for initialization
     IEnumerator Start()
     {
+        _shop = GameObject.Find("Shop");
+        _teapotManager = FindObjectOfType<TeapotManager>();
+
+
         _coffeeMakerPrefabs = new Dictionary<CoffeeMakerType, GameObject>()
         {
             {CoffeeMakerType.Cafetiere, _cafetiere },
             {CoffeeMakerType.ItalianStove, _italianStove },
         };
+        HideShop();
 
         _randomGenerator = new System.Random();
 
-        _spawnInformation = FindObjectOfType<SpawnInformation>();
         _gameController = FindObjectOfType<GameController>();
 
         _waves = SpawnWave.Levels;
@@ -68,7 +74,6 @@ public class CoffeeMakerSpawner : MonoBehaviour {
         var coffeeMaker = Instantiate(coffeeMakerPrefab, spawnPoint, Quaternion.identity) as GameObject;
         coffeeMaker.transform.SetParent(transform);
         coffeeMaker.GetComponent<CoffeeMaker>().Died += () => _coffeeMakersAlive--;
-        _spawnInformation.EntitySpawned();
     }
 
     private IEnumerator SpawnNextWave()
@@ -82,16 +87,44 @@ public class CoffeeMakerSpawner : MonoBehaviour {
         }
         else
         {
+            if (_nextWaveIndex != 0)
+            {
+                while (_coffeeMakersAlive != 0)
+                    yield return null;
+                yield return ShowShop();
+            }
             SpawnWave nextWave = _waves[_nextWaveIndex];
             yield return SpawnNextWave(nextWave);
         }
     }
 
+    private IEnumerator ShowShop()
+    {
+        _teapotManager.ShowShop();
+        _shop.GetComponent<RectTransform>().position = new Vector3(Screen.width / 2, Screen.height / 2);
+        
+        bool shopIsOpen = true;
+        _shop.transform.FindChild("NextButton").GetComponent<Button>().onClick.AddListener(() =>
+        {
+            shopIsOpen = false;
+            HideShop();
+        });
+
+        while (shopIsOpen)
+            yield return null;
+    }
+
+    private void HideShop()
+    {
+        _teapotManager.HideShop();
+        _shop.GetComponent<RectTransform>().position = new Vector3(10000, 10000);
+    }
+
+
 
     private IEnumerator SpawnNextWave(SpawnWave wave)
     {
         _currentWave = wave;
-        _spawnInformation.SetNextSpawn(wave);
         _coffeeMakersAlive += wave.Count;
         
         yield return new WaitForSeconds(wave.TimeBeforeFirstSpawn);

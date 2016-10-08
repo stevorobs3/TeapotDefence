@@ -10,7 +10,7 @@ public class PlantationManager : MonoBehaviour {
     private CurrencyManager _currencyManager;
     private GameController _gameController;
     private HotbarManager _hotbarManager;
-    private PlantationUpgradeManager _upgradeManager;
+    //private PlantationUpgradeManager _upgradeManager;
 
     const int TEA_PLANTATION_COST = 10;
 
@@ -20,20 +20,20 @@ public class PlantationManager : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        _upgradeManager = FindObjectOfType<PlantationUpgradeManager>();
+        //_upgradeManager = FindObjectOfType<PlantationUpgradeManager>();
         _gameController = FindObjectOfType<GameController>();
         _hotbarManager = FindObjectOfType<HotbarManager>();
         SpawnPlantation(_spawnLocation);
         _currencyManager = FindObjectOfType<CurrencyManager>();
 
 
-        _upgradeManager.HealthUpgraded += UpgradeHealth;
+        /*_upgradeManager.HealthUpgraded += UpgradeHealth;
         _upgradeManager.LPSUpgraded += UpgradeLPS;
         _upgradeManager.RegenUpgraded += UpgradeRegen;
         _upgradeManager.LeavesUpgraded += (upgrade) => {
             _selectedPlantation.TeaLeafValue = (int)upgrade.Value;
             _selectedPlantation.TeaLeafColour = upgrade.Colour;
-        };
+        };*/
 
     }
 	
@@ -84,7 +84,7 @@ public class PlantationManager : MonoBehaviour {
             _selectedPlantation.UnSelect();
         _selectedPlantation = plantation;
         plantation.Select();
-        _upgradeManager.SelectPlantation(plantation);   
+        //_upgradeManager.SelectPlantation(plantation);   
     }
 
     private void SpawnPlantation(Vector3 position)
@@ -92,7 +92,7 @@ public class PlantationManager : MonoBehaviour {
         _gameController.PlantationsBuilt(1);
         var plantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<Plantation>();
         plantation.transform.SetParent(transform);
-        _upgradeManager.AddPlantation(plantation);
+        //_upgradeManager.AddPlantation(plantation);
         SelectPlantation(plantation);
         _teaPlantations.Add(position, plantation);
     }

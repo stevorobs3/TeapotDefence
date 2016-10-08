@@ -2,10 +2,10 @@
 
 public class PlantationLPSUpgrade : Upgrade
 {
-    public static readonly PlantationLPSUpgrade Level0 = new PlantationLPSUpgrade(0, 1);
-    public static readonly PlantationLPSUpgrade Level1 = new PlantationLPSUpgrade(20, 1.25f);
-    public static readonly PlantationLPSUpgrade Level2 = new PlantationLPSUpgrade(40, 1.5f);
-    public static readonly PlantationLPSUpgrade Level3 = new PlantationLPSUpgrade(60, 2f);
+    public static readonly PlantationLPSUpgrade Level0 = new PlantationLPSUpgrade(0, 1, 0);
+    public static readonly PlantationLPSUpgrade Level1 = new PlantationLPSUpgrade(20, 1.25f, 1);
+    public static readonly PlantationLPSUpgrade Level2 = new PlantationLPSUpgrade(40, 1.5f, 2);
+    public static readonly PlantationLPSUpgrade Level3 = new PlantationLPSUpgrade(60, 2f, 3);
     
 
     public static PlantationLPSUpgrade[] Upgrades = new PlantationLPSUpgrade[4]
@@ -14,5 +14,5 @@ public class PlantationLPSUpgrade : Upgrade
     };
 
 
-    private PlantationLPSUpgrade(int cost, float value) : base(cost, value, "LPS") { }
+    private PlantationLPSUpgrade(int cost, float value, int level) : base(cost, value, level, "LPS") { }
 }

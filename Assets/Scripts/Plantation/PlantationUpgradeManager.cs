@@ -50,7 +50,7 @@ public class PlantationUpgradeManager : UpgradeManager
             Start();
         else
             ConfigureUpgrades();
-        _upgradeMenus.SelectMenuOption(1);
+        //_upgradeMenus.SelectMenuOption(1);
     }
 
     protected override void ConfigureUpgrades()

@@ -5,6 +5,9 @@ public abstract class UpgradeManager : MonoBehaviour
 {
     protected UpgradeElement[] _stats;
 
+    public delegate void InitializedHandler();
+    public event InitializedHandler Initialized;
+
     CurrencyManager _currencyManager;
 
     protected void Start()
@@ -15,6 +18,8 @@ public abstract class UpgradeManager : MonoBehaviour
 
             _stats = GetComponentsInChildren<UpgradeElement>();
             ConfigureUpgrades();
+            if (Initialized != null)
+                Initialized();
         }
     }
 
@@ -22,28 +27,22 @@ public abstract class UpgradeManager : MonoBehaviour
     
     protected void ConfigureUpgrade<T>(UpgradeElement element, UpgradeHelper<T> upgradeManager, Action<T> successAction) where T : Upgrade
     {
-        element.Button.onClick.RemoveAllListeners();
+        element.CostButton.onClick.RemoveAllListeners();
 
         bool hasNextUpgrade = upgradeManager.Next != null;
 
-        element.Button.enabled = hasNextUpgrade;
-        element.Cost.enabled = hasNextUpgrade;
-        element.BuySection.SetActive(hasNextUpgrade);
-        element.Bonus.gameObject.SetActive(hasNextUpgrade);
+        element.CostButton.enabled = hasNextUpgrade;
+
+        for (int i = 0; i < element.Levels.Length; i++)
+        {
+            element.Levels[i].color = (i < upgradeManager.Current.Level) ? new Color(186f / 255f, 0, 0, 1f) : Color.white;
+        }
 
         if (hasNextUpgrade)
         {
-            element.Button.onClick.AddListener(() => UpgradeStat(upgradeManager, successAction));
-            element.Title.text = upgradeManager.Next.Title;
-
-            float bonus = upgradeManager.Next.Value - upgradeManager.Current.Value;
-            element.Bonus.text = "(+" + bonus.ToString() + ")";
-            element.Value.text = upgradeManager.Current.Value.ToString();
-            element.Cost.text = upgradeManager.Next.Cost.ToString();
-        }
-        else
-        {
-            element.Value.text = upgradeManager.Current.Value.ToString();
+            element.CostButton.onClick.AddListener(() => UpgradeStat(upgradeManager, successAction));
+            element.Name.text = upgradeManager.Next.Title;
+            element.CostText.text = upgradeManager.Next.Cost.ToString();
         }        
     }
 
