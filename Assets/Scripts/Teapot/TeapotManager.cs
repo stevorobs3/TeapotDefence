@@ -8,7 +8,6 @@ public class TeapotManager : MonoBehaviour {
     public SteamUpgradeManager _steamUpgradeManager;
 
     private float _speed = 1.5f;
-    private float _lastAttackTime;
     private int _ammoRemaining;
     private bool _reloading;
 
@@ -17,16 +16,11 @@ public class TeapotManager : MonoBehaviour {
     private Vector3 _spawnLocation = new Vector3(2, 2, 0);
     private Teapot _teapot;
 
-    private GameController _gameController;
-    private HotbarManager _hotbarManager;
-
     private bool _shopIsVisible = false;
 
     void Awake()
     {
         _steamUpgradeManager = FindObjectOfType<SteamUpgradeManager>();
-        _gameController = FindObjectOfType<GameController>();
-        _hotbarManager = FindObjectOfType<HotbarManager>();
         _steamWeaponView = FindObjectOfType<WeaponView>();
         _teapot = (Instantiate(_teapotPrefab, _spawnLocation, Quaternion.identity)as GameObject).GetComponent<Teapot>();
         _teapot.transform.SetParent(gameObject.transform);
@@ -35,7 +29,6 @@ public class TeapotManager : MonoBehaviour {
         _steamUpgradeManager.Initialized += () =>
         {
             float currentReloadTime = _steamUpgradeManager.ReloadTime.Current.Value;
-            _lastAttackTime = Time.deltaTime - currentReloadTime;
             _ammoRemaining = (int)_steamUpgradeManager.ClipSize.Current.Value;
 
             _steamWeaponView.SetClipSize(_ammoRemaining);
