@@ -19,9 +19,12 @@ public class PlantationManager : MonoBehaviour {
 
     Plantation _selectedPlantation;
 
+    GameObject _plantationParent;
+
     // Use this for initialization
     void Awake()
     {
+        _plantationParent = new GameObject("PlantationParent");
         //_upgradeManager = FindObjectOfType<PlantationUpgradeManager>();
         _gameController = FindObjectOfType<GameController>();
         _hotbarManager = FindObjectOfType<HotbarManager>();
@@ -107,7 +110,7 @@ public class PlantationManager : MonoBehaviour {
         _gameController.PlantationsBuilt(1);
         var plantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<Plantation>();
         _toPlace = plantation;
-        plantation.transform.SetParent(transform);
+        plantation.transform.SetParent(_plantationParent.transform);
         //_upgradeManager.AddPlantation(plantation);
         SelectPlantation(plantation);
         _teaPlantations.Add(position, plantation);
