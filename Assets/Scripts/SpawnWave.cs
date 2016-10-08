@@ -1,7 +1,7 @@
 ﻿
 public class SpawnWave
 {
-    private static readonly SpawnWave Level0 = new SpawnWave(10, 1, 0f, 3f);
+    private static readonly SpawnWave Level0 = new SpawnWave(0, 1, 0f, 3f);
     private static readonly SpawnWave Level1 = new SpawnWave(10, 2, 1f, 2.5f);
     private static readonly SpawnWave Level2 = new SpawnWave(20, 5, 1f, 2.25f);
     private static readonly SpawnWave Level3 = new SpawnWave(15, 10, 1f, 2f);

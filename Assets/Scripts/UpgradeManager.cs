@@ -42,7 +42,7 @@ public abstract class UpgradeManager : MonoBehaviour
         {
             element.CostButton.onClick.AddListener(() => UpgradeStat(upgradeManager, successAction));
             element.Name.text = upgradeManager.Next.Title;
-            element.CostText.text = upgradeManager.Next.Cost.ToString();
+            element.CostText.text = "£" + upgradeManager.Next.Cost.ToString();
         }        
     }
 

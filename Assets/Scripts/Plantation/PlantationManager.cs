@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class PlantationManager : MonoBehaviour {
 
@@ -12,18 +13,20 @@ public class PlantationManager : MonoBehaviour {
     private HotbarManager _hotbarManager;
     //private PlantationUpgradeManager _upgradeManager;
 
-    const int TEA_PLANTATION_COST = 10;
+    const int TEA_PLANTATION_COST = 100;
 
     Vector3 _spawnLocation = new Vector3(2, 1, 0);
 
     Plantation _selectedPlantation;
 
     // Use this for initialization
-    void Awake () {
+    void Awake()
+    {
         //_upgradeManager = FindObjectOfType<PlantationUpgradeManager>();
         _gameController = FindObjectOfType<GameController>();
         _hotbarManager = FindObjectOfType<HotbarManager>();
         SpawnPlantation(_spawnLocation);
+        _toPlace = null;
         _currencyManager = FindObjectOfType<CurrencyManager>();
 
 
@@ -35,28 +38,40 @@ public class PlantationManager : MonoBehaviour {
             _selectedPlantation.TeaLeafColour = upgrade.Colour;
         };*/
 
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetMouseButtonDown(0))
+        GetComponent<Button>().onClick.AddListener(() =>
         {
-            var spawnLocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (!CoffeeMakerSpawner.WithinGrid(spawnLocation)) return;
-
-            spawnLocation.z = 0;
-            spawnLocation.y = Mathf.Round(spawnLocation.y);
-            spawnLocation.x = Mathf.Round(spawnLocation.x);
-            
-            if (_teaPlantations.ContainsKey(spawnLocation))
+            if (_currencyManager.Spend(TEA_PLANTATION_COST))
             {
-                SelectPlantation(_teaPlantations[spawnLocation]);
+                
+                SpawnPlantation(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
-            else if (_hotbarManager.CurrentlySelectedItem() == SelectedItem.TeaPlantation && _currencyManager.Spend(TEA_PLANTATION_COST)) {
-                SpawnPlantation(spawnLocation);
+        });
+    }
+
+    private Plantation _toPlace = null;
+
+    void Update()
+    {
+        var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0;
+        if (_toPlace != null)
+        {
+            _toPlace.transform.position = mousePosition;
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!CoffeeMakerSpawner.WithinGrid(mousePosition)) return;
+
+
+
+                mousePosition.z = 0;
+                mousePosition.y = Mathf.Round(mousePosition.y);
+                mousePosition.x = Mathf.Round(mousePosition.x);
+                _toPlace.transform.position = mousePosition;
+                _toPlace = null;
+
             }
         }
-	}
+    }
 
     public void RemoveTeaPlantation(Vector3 position)
     {
@@ -91,6 +106,7 @@ public class PlantationManager : MonoBehaviour {
     {
         _gameController.PlantationsBuilt(1);
         var plantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<Plantation>();
+        _toPlace = plantation;
         plantation.transform.SetParent(transform);
         //_upgradeManager.AddPlantation(plantation);
         SelectPlantation(plantation);
