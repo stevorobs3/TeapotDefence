@@ -29,6 +29,7 @@ public class PlantationManager : MonoBehaviour {
         _gameController = FindObjectOfType<GameController>();
         _hotbarManager = FindObjectOfType<HotbarManager>();
         SpawnPlantation(_spawnLocation);
+        _toPlace.enabled = true;
         _toPlace = null;
         _currencyManager = FindObjectOfType<CurrencyManager>();
 
@@ -70,8 +71,8 @@ public class PlantationManager : MonoBehaviour {
                 mousePosition.y = Mathf.Round(mousePosition.y);
                 mousePosition.x = Mathf.Round(mousePosition.x);
                 _toPlace.transform.position = mousePosition;
+                _toPlace.enabled = true;
                 _toPlace = null;
-
             }
         }
     }
@@ -109,6 +110,7 @@ public class PlantationManager : MonoBehaviour {
     {
         _gameController.PlantationsBuilt(1);
         var plantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<Plantation>();
+        plantation.enabled = false;
         _toPlace = plantation;
         plantation.transform.SetParent(_plantationParent.transform);
         //_upgradeManager.AddPlantation(plantation);

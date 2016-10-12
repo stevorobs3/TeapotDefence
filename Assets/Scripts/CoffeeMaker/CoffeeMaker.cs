@@ -39,22 +39,23 @@ public class CoffeeMaker : MonoBehaviour
     private void ChooseTarget()
     {
         var targets = FindObjectsOfType<Plantation>();
-        if (targets.Length == 0)
+        _target = targets.ToList().Find(plantation => plantation.enabled);
+        if (_target == null)
         {
-            _target = null;
             _gameController.EndGame(win : false);
             return;
         }
-        _target = targets.First();
+
         foreach (var target in targets)
         {
-            var distanceToTarget        = Vector3.Magnitude(transform.position - target.transform.position);
+            var distanceToTarget = Vector3.Magnitude(transform.position - target.transform.position);
             var distanceToCurrentTarget = Vector3.Magnitude(transform.position - _target.transform.position);
-            if (distanceToTarget < distanceToCurrentTarget)
+            if (distanceToTarget < distanceToCurrentTarget && target.enabled)
             {
                 _target = target;
             }
-        }        
+        }
+        
     }
 
     void Update()

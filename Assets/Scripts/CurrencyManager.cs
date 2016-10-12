@@ -11,7 +11,7 @@ public class CurrencyManager : MonoBehaviour {
     {
         _text = GetComponent<Text>();
 #if UNITY_EDITOR
-        //_balance = 9999;
+        _balance = 9999;
 #endif
     }
 
