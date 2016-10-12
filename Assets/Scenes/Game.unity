@@ -5131,7 +5131,7 @@ MonoBehaviour:
     type: 2}
   _steamUpgradeManager: {fileID: 1446946097}
   _steamWeaponView: {fileID: 125670609}
-  _lidPrefab: {fileID: 114000011658621938, guid: 7b0fb1b802b0e8d47b6f3b14fc78d133,
+  _lidPrefab: {fileID: 114000010725623556, guid: 3444c1a80ee0e774e851654a4e73fc6b,
     type: 2}
   _lidWeaponView: {fileID: 1068062807}
 --- !u!4 &1559997335

@@ -118,7 +118,13 @@ public class TeapotManager : MonoBehaviour {
             var go = lid.gameObject;
             FollowMouse(ref go);
             go.transform.Rotate(new Vector3(0, 180, 0));
-            lid.HitEnemy += (enemy) => AttackEnemy(enemy, _lidUpgradeManager.Damage.Current.Value);
+            lid.HitEnemies += (enemies) => {
+                foreach (var enemy in enemies)
+                    AttackEnemy(enemy, _lidUpgradeManager.Damage.Current.Value);
+            };
+            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0;
+            lid.MoveToPosition(mousePos);
         }
     }
 
