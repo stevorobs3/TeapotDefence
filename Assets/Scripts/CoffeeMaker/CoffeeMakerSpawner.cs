@@ -41,6 +41,7 @@ public class CoffeeMakerSpawner : MonoBehaviour {
 
     private GameController _gameController;
     private TeapotManager _teapotManager;
+    private PlantationManager _plantationManager;
 
     GameObject _shop;
     // Use this for initialization
@@ -48,6 +49,7 @@ public class CoffeeMakerSpawner : MonoBehaviour {
     {
         _shop = GameObject.Find("Shop");
         _teapotManager = FindObjectOfType<TeapotManager>();
+        _plantationManager = FindObjectOfType<PlantationManager>();
 
 
         _coffeeMakerPrefabs = new Dictionary<CoffeeMakerType, GameObject>()
@@ -100,7 +102,9 @@ public class CoffeeMakerSpawner : MonoBehaviour {
 
     private IEnumerator ShowShop()
     {
+        //TODO: reverse this!
         _teapotManager.ShowShop();
+        _plantationManager.ShowShop();
         _shop.GetComponent<RectTransform>().position = new Vector3(Screen.width / 2, Screen.height / 2);
         
         bool shopIsOpen = true;
@@ -117,6 +121,7 @@ public class CoffeeMakerSpawner : MonoBehaviour {
     private void HideShop()
     {
         _teapotManager.HideShop();
+        _plantationManager.HideShop();
         _shop.GetComponent<RectTransform>().position = new Vector3(10000, 10000);
     }
 

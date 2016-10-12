@@ -39,7 +39,7 @@ public class Plantation : MonoBehaviour {
     private GameObject _healthBar;
 
 
-    private float lastTeaLeafSpawn;
+    private float _lastTeaLeafSpawn;
 
     private Animator _animator;
 
@@ -56,9 +56,14 @@ public class Plantation : MonoBehaviour {
         _currencyManager = FindObjectOfType<CurrencyManager>();
     }
 
+    void OnEnabled()
+    {
+        _lastTeaLeafSpawn = Time.time;
+    }
+
     // Update is called once per frame
     void Update () {
-        if (Time.time - lastTeaLeafSpawn > 1 / LPS)
+        if (Time.time - _lastTeaLeafSpawn > 1 / LPS)
         {
             SpawnTeaLeaf();
         }
@@ -91,7 +96,7 @@ public class Plantation : MonoBehaviour {
 
     private void Die()
     {
-        _plantationManager.RemoveTeaPlantation(transform.position);
+        _plantationManager.RemovePlantation(this);
         Destroy(gameObject);
     }
 
@@ -112,7 +117,7 @@ public class Plantation : MonoBehaviour {
     {
         if (_teaLeaves.Keys.Count != _spawnPoints.Count)
         {
-            lastTeaLeafSpawn = Time.time;
+            _lastTeaLeafSpawn = Time.time;
             var spawnLocation = RandomFreeSpawnPosition();
             var teaLeaf = Instantiate(TeaLeaf, spawnLocation, RandomRotation()) as GameObject;
             teaLeaf.transform.SetParent(transform);

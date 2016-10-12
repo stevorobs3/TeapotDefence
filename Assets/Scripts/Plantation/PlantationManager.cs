@@ -7,7 +7,7 @@ public class PlantationManager : MonoBehaviour {
     public GameObject _teaPlantationPrefab;
 
 
-    private Dictionary<Vector3, Plantation> _teaPlantations = new Dictionary<Vector3, Plantation>();
+    private List<Plantation> _plantations = new List<Plantation>();
     private CurrencyManager _currencyManager;
     private GameController _gameController;
     private HotbarManager _hotbarManager;
@@ -44,12 +44,29 @@ public class PlantationManager : MonoBehaviour {
 
         GetComponent<Button>().onClick.AddListener(() =>
         {
-            if (_currencyManager.Spend(TEA_PLANTATION_COST))
+            if (CanPlacePlantation() &&  _currencyManager.Spend(TEA_PLANTATION_COST))
             {
                 
                 SpawnPlantation(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
         });
+    }
+
+    public void ShowShop()
+    {
+        foreach (var plantation in _plantations)
+        {
+            if (plantation != null)
+                plantation.enabled = false;
+        }
+    }
+
+    public void HideShop()
+    {
+        foreach (var plantation in _plantations)
+        {
+            plantation.enabled = true;
+        }
     }
 
     private Plantation _toPlace = null;
@@ -77,9 +94,9 @@ public class PlantationManager : MonoBehaviour {
         }
     }
 
-    public void RemoveTeaPlantation(Vector3 position)
+    public void RemovePlantation(Plantation plantation)
     {
-        _teaPlantations.Remove(position);
+        _plantations.Remove(plantation);
     }
 
     void UpgradeHealth(PlantationHealthUpgrade upgrade)
@@ -103,7 +120,6 @@ public class PlantationManager : MonoBehaviour {
             _selectedPlantation.UnSelect();
         _selectedPlantation = plantation;
         plantation.Select();
-        //_upgradeManager.SelectPlantation(plantation);   
     }
 
     private void SpawnPlantation(Vector3 position)
@@ -115,6 +131,11 @@ public class PlantationManager : MonoBehaviour {
         plantation.transform.SetParent(_plantationParent.transform);
         //_upgradeManager.AddPlantation(plantation);
         SelectPlantation(plantation);
-        _teaPlantations.Add(position, plantation);
+        _plantations.Add(plantation);
+    }
+
+    private bool CanPlacePlantation()
+    {
+        return true;
     }
 }
