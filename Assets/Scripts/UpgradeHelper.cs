@@ -22,6 +22,11 @@ public class UpgradeHelper<T> where T : Upgrade
         }
     }
 
+    public void Reset()
+    {
+        _currentIndex = 0;
+    }
+
     public bool CanUpgrade()
     {
         return _currentIndex < _upgrades.Length - 1;

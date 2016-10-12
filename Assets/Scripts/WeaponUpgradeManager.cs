@@ -14,6 +14,12 @@ public abstract class WeaponUpgradeManager<DamageUpgrade, ReloadTimeUpgrade, Cli
     public abstract UpgradeHelper<ReloadTimeUpgrade> ReloadTime { get; }
     public abstract UpgradeHelper<ClipSizeUpgrade> ClipSize { get; }
     
+    void Awake()
+    {
+        Damage.Reset();
+        ReloadTime.Reset();
+        ClipSize.Reset();
+    }
 
     protected override void ConfigureUpgrades()
     {

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
@@ -11,10 +10,15 @@ public class GameController : MonoBehaviour {
 
     void Start()
     {
-        GameObject.DontDestroyOnLoad(gameObject);
+        ResetStats();
+    }
+
+    private void ResetStats()
+    {
         _cafetieresKilled = 0;
         _teaLeavesHarvested = 0;
         _steamUsed = 0;
+        _plantationsBuilt = 0;
     }
 
 

@@ -79,7 +79,7 @@ public class CoffeeMakerSpawner : MonoBehaviour {
     private IEnumerator SpawnNextWave()
     {
         _nextWaveIndex++;
-        if (_nextWaveIndex >= _waves.Length - 1)
+        if (_nextWaveIndex > _waves.Length - 1)
         {
             while (_coffeeMakersAlive != 0)
                 yield return null;
