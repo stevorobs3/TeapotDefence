@@ -1,12 +1,12 @@
 ﻿
 public class LidReloadTimeUpgrade : Upgrade
 {
-    public static readonly LidReloadTimeUpgrade Level0 = new LidReloadTimeUpgrade(0, 1, 0);
-    public static readonly LidReloadTimeUpgrade Level1 = new LidReloadTimeUpgrade(20, 0.9f, 1);
-    public static readonly LidReloadTimeUpgrade Level2 = new LidReloadTimeUpgrade(40, 0.8f, 2);
-    public static readonly LidReloadTimeUpgrade Level3 = new LidReloadTimeUpgrade(60, 0.7f, 3);
-    public static readonly LidReloadTimeUpgrade Level4 = new LidReloadTimeUpgrade(60, 0.6f, 4);
-    public static readonly LidReloadTimeUpgrade Level5 = new LidReloadTimeUpgrade(60, 0.5f, 5);
+    public static readonly LidReloadTimeUpgrade Level0 = new LidReloadTimeUpgrade(0, 7f, 0);
+    public static readonly LidReloadTimeUpgrade Level1 = new LidReloadTimeUpgrade(50, 6f, 1);
+    public static readonly LidReloadTimeUpgrade Level2 = new LidReloadTimeUpgrade(100, 5f, 2);
+    public static readonly LidReloadTimeUpgrade Level3 = new LidReloadTimeUpgrade(150, 4f, 3);
+    public static readonly LidReloadTimeUpgrade Level4 = new LidReloadTimeUpgrade(200, 3f, 4);
+    public static readonly LidReloadTimeUpgrade Level5 = new LidReloadTimeUpgrade(300, 2f, 5);
 
     public static LidReloadTimeUpgrade[] Upgrades = new LidReloadTimeUpgrade[]
     {

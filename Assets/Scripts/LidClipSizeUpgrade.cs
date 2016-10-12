@@ -1,12 +1,12 @@
 ﻿
 public class LidClipSizeUpgrade : Upgrade
 {
-    public static readonly LidClipSizeUpgrade Level0 = new LidClipSizeUpgrade(0, 3, 0);
-    public static readonly LidClipSizeUpgrade Level1 = new LidClipSizeUpgrade(100, 4, 1);
-    public static readonly LidClipSizeUpgrade Level2 = new LidClipSizeUpgrade(200, 5, 2);
-    public static readonly LidClipSizeUpgrade Level3 = new LidClipSizeUpgrade(300, 6, 3);
-    public static readonly LidClipSizeUpgrade Level4 = new LidClipSizeUpgrade(400, 7, 4);
-    public static readonly LidClipSizeUpgrade Level5 = new LidClipSizeUpgrade(500, 8, 5);
+    public static readonly LidClipSizeUpgrade Level0 = new LidClipSizeUpgrade(0, 1, 0);
+    public static readonly LidClipSizeUpgrade Level1 = new LidClipSizeUpgrade(100, 2, 1);
+    public static readonly LidClipSizeUpgrade Level2 = new LidClipSizeUpgrade(200, 3, 2);
+    public static readonly LidClipSizeUpgrade Level3 = new LidClipSizeUpgrade(300, 4, 3);
+    public static readonly LidClipSizeUpgrade Level4 = new LidClipSizeUpgrade(400, 5, 4);
+    public static readonly LidClipSizeUpgrade Level5 = new LidClipSizeUpgrade(500, 6, 5);
 
     public static LidClipSizeUpgrade[] Upgrades = new LidClipSizeUpgrade[]
     {
