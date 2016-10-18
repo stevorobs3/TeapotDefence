@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 public class Plantation : MonoBehaviour {
 
@@ -49,11 +48,11 @@ public class Plantation : MonoBehaviour {
         _health = MaxHealth;
         _gameController = FindObjectOfType<GameController>();
         _plantationManager = FindObjectOfType<PlantationManager>();
+        _currencyManager = FindObjectOfType<CurrencyManager>();
 
         AssignHealthBar();
         AddSpawnPoints();
         SpawnTeaLeaf();
-        _currencyManager = FindObjectOfType<CurrencyManager>();
     }
 
     void OnEnabled()
@@ -81,7 +80,7 @@ public class Plantation : MonoBehaviour {
     {
         _health -= amount;
         ScaleHealthBar();
-        bool died = _health <= -0;
+        bool died = _health <= 0;
         if (died)
             Die();
         return died; 
