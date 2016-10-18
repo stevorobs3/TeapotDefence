@@ -127,6 +127,7 @@ public class PlantationManager : MonoBehaviour {
         _gameController.PlantationsBuilt(1);
         var plantation = (Instantiate(_teaPlantationPrefab, position, Quaternion.identity) as GameObject).GetComponent<Plantation>();
         plantation.enabled = false;
+        plantation.name = "Plantation " + _plantations.Count;
         _toPlace = plantation;
         plantation.transform.SetParent(_plantationParent.transform);
         //_upgradeManager.AddPlantation(plantation);

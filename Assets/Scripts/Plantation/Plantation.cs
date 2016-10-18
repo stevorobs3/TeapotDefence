@@ -6,6 +6,11 @@ public class Plantation : MonoBehaviour {
 
     public GameObject TeaLeaf;
 
+    public TextMesh LevelText;
+    public GameObject LevelPlus;
+    public TextMesh UpgradeCostText;
+    public GameObject UpgradeInfo;
+    
 
     public void Select()
     {
@@ -37,22 +42,45 @@ public class Plantation : MonoBehaviour {
 
     private GameObject _healthBar;
 
+    private bool _isUpgradeEnabled; // true if upgrade menu is enabled for this plantation
+
+
 
     private float _lastTeaLeafSpawn;
 
     private Animator _animator;
 
+    private PlantationUpgradeManager _upgradeManager;
+
     void Awake()
     {
+        UpgradeInfo.SetActive(false);
         _animator = GetComponent<Animator>();
         _health = MaxHealth;
         _gameController = FindObjectOfType<GameController>();
         _plantationManager = FindObjectOfType<PlantationManager>();
         _currencyManager = FindObjectOfType<CurrencyManager>();
 
+        _upgradeManager = new PlantationUpgradeManager();
+        
         AssignHealthBar();
         AddSpawnPoints();
         SpawnTeaLeaf();
+        AssignUpgrades();
+    }
+
+    void AssignUpgrades()
+    {
+        TeaLeafValue = (int)_upgradeManager.LeavesUpgradeManager.Current.Value;
+        TeaLeafColour = _upgradeManager.LeavesUpgradeManager.Current.Colour;
+        MaxHealth = _upgradeManager.HealthUpgradeManager.Current.Value;
+        LPS = _upgradeManager.LPSUpgradeManager.Current.Value;
+        Regen = _upgradeManager.RegenUpgradeManager.Current.Value;
+        LevelText.text = _upgradeManager.RegenUpgradeManager.Current.Level.ToString();
+        bool canUpgrade = _upgradeManager.RegenUpgradeManager.CanUpgrade();
+        LevelPlus.SetActive(canUpgrade);
+        if (canUpgrade)
+            UpgradeCostText.text = "£" + _upgradeManager.Cost.ToString();
     }
 
     void OnEnabled()
@@ -74,7 +102,40 @@ public class Plantation : MonoBehaviour {
         {
             leaf.GetComponent<SpriteRenderer>().color = TeaLeafColour;
         }
+
+        if (_isUpgradeEnabled && _upgradeManager.CanUpgrade() && Input.GetMouseButtonDown(0))
+            Upgrade();
 	}
+
+    void OnMouseEnter()
+    {
+        if (enabled && _upgradeManager.CanUpgrade())
+            ActivateUpdateInfo(true);
+    }
+
+    void OnMouseExit()
+    {
+        if (enabled && _upgradeManager.CanUpgrade())
+            ActivateUpdateInfo(false);
+    }
+
+    private void Upgrade()
+    {
+        if (_currencyManager.Spend(_upgradeManager.Cost))
+        {
+            _upgradeManager.Upgrade();
+            AssignUpgrades();
+            if (!_upgradeManager.CanUpgrade())
+                ActivateUpdateInfo(false);
+        }            
+    }
+
+    private void ActivateUpdateInfo(bool on)
+    {
+        Debug.Log("setting active " + on);
+        _isUpgradeEnabled = on;
+        UpgradeInfo.SetActive(on);
+    }
 
     public bool TakeDamage(float amount)
     {
